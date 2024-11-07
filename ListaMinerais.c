@@ -20,29 +20,30 @@ int LInsere(ListaMinerais* LMinerais, Mineral x){
 int LRetira(ListaMinerais* LMinerais, char* nome, Mineral *pX){
     int i, cont;
     
-    for (i = 0; i < LMinerais->last; i++){
+    for (i = 0; i < LMinerais->last; i++) {
         if (strcmp(LMinerais->ListaM[i].nome, nome) == 0) {
             *pX = LMinerais->ListaM[i];
+
+            LMinerais->last--;
+
+            for (cont = i + 1; cont <= LMinerais->last; cont++) {
+                LMinerais->ListaM[cont - 1] = LMinerais->ListaM[cont];
+            }
+
+            return 1;
         }
-
-        LMinerais->last--;
-
-        for (cont = i+1; cont <= LMinerais->last; cont++) {
-            LMinerais->ListaM[cont-1] = LMinerais->ListaM[cont];
-        }
-
-        return 1;
     }
+    return 0;
 }
 
 void LImprime(ListaMinerais* LMinerias){
     int i;
 
-    printf("Info dos minerais:\n\n");
+    printf("Info dos minerais:\n");
     for (i = LMinerias->first; i < LMinerias->last; i++) {
         printf("Nome: %s\n", LMinerias->ListaM[i].nome);
         printf("Cor: %s\n", LMinerias->ListaM[i].cor);
         printf("Dureza: %.3lf\n", LMinerias->ListaM[i].dureza);
-        printf("Reatividade: %.3lf\n", LMinerias->ListaM[i].reativ);
+        printf("Reatividade: %.3lf\n\n", LMinerias->ListaM[i].reativ);
     }
 }
