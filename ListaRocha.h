@@ -18,9 +18,10 @@ typedef struct
 void FLVazia(RLista* rLista);
 int LEhVazia(RLista* rLista);
 void LImprime(RLista* rLista);
+float LPeso(RLista* rLista);
 void LTrocaR(RLista* rLista);
 int LInsere(RLista* rLista, RochaMineral *pRocha);
-int LRetira(RLista* rLista, RochaMineral *pRocha);
+int LRetira(RLista* rLista, char* categoria);
 
 
 #endif
