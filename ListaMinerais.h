@@ -11,10 +11,10 @@ typedef struct
     Apontador first, last;
 }ListaMinerais;
 
-void FLVazia(ListaMinerais* LMinerais);
-int LEhVazia(ListaMinerais* LMinerais);
-int LInsere(ListaMinerais* LMinerais, Mineral x);
-int LRetira(ListaMinerais* LMinerais, char* nome, Mineral *pX);
-void LImprime(ListaMinerais* LMinerais);
+void FLVaziaMine(ListaMinerais* LMinerais);
+int LEhVaziaMine(ListaMinerais* LMinerais);
+int LInsereMine(ListaMinerais* LMinerais, Mineral x);
+int LRetiraMine(ListaMinerais* LMinerais, char* nome, Mineral *pX);
+void LImprimeMine(ListaMinerais* LMinerais);
 
 #endif

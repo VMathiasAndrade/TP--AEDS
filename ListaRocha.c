@@ -4,22 +4,22 @@
 #include "ListaRocha.h"
 
 void FLVazia(RLista* rLista){
-    rLista->pPrimeiro = (Apontador)malloc(sizeof(RCelula));
+    rLista->pPrimeiro = (TamCelula)malloc(sizeof(RCelula));
     rLista->pUltimo = rLista->pPrimeiro;
     rLista->pPrimeiro->pProx = NULL;
 }
 int LEhVazia(RLista* rLista){
     return (rLista->pPrimeiro == rLista->pUltimo);
 }
-void LInsere(RLista *rLista, RochaMineral* pRocha){
-    rLista->pUltimo->pProx = (Apontador)malloc(sizeof(RCelula));
+int LInsere(RLista *rLista, RochaMineral* pRocha){
+    rLista->pUltimo->pProx = (TamCelula)malloc(sizeof(RCelula));
     rLista->pUltimo = rLista->pUltimo->pProx;
     rLista->pUltimo->rocha = *pRocha;
     rLista->pUltimo->pProx = NULL;
 }
 void LImprime(RLista* rLista){
     int cont;
-    Apontador pAux;
+    TamCelula pAux;
     pAux = rLista->pPrimeiro->pProx;
     while (pAux != NULL)
     {

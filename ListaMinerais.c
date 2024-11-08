@@ -2,22 +2,22 @@
 #include <string.h>
 #include "ListaMinerais.h"
 
-void FLVazia(ListaMinerais* LMinerais){
+void FLVaziaMine(ListaMinerais* LMinerais){
     LMinerais->first = 0;
     LMinerais->last = LMinerais->first;
 }
 
-int LEhVazia(ListaMinerais* LMineirais){
+int LEhVaziaMine(ListaMinerais* LMineirais){
     return (LMineirais->last == LMineirais->first);
 }
 
-int LInsere(ListaMinerais* LMinerais, Mineral x){
+int LInsereMine(ListaMinerais* LMinerais, Mineral x){
     if(LMinerais->last == MaxTam) return 0;
     LMinerais->ListaM[LMinerais->last++] = x;
     return 1;
 }
 
-int LRetira(ListaMinerais* LMinerais, char* nome, Mineral *pX){
+int LRetiraMine(ListaMinerais* LMinerais, char* nome, Mineral *pX){
     int i, cont;
     
     for (i = 0; i < LMinerais->last; i++) {
@@ -36,7 +36,7 @@ int LRetira(ListaMinerais* LMinerais, char* nome, Mineral *pX){
     return 0;
 }
 
-void LImprime(ListaMinerais* LMinerias){
+void LImprimeMine(ListaMinerais* LMinerias){
     int i;
 
     printf("Info dos minerais:\n");

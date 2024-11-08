@@ -51,10 +51,10 @@ void setIdentificador(RochaMineral* rocha, int id){
 void setPeso(RochaMineral* rocha, float peso){
     rocha->peso = peso;
 }
-void setCategoria(RochaMineral* rocha, const char* categoria){
+void setCategoria(RochaMineral* rocha, char* categoria){
     strcpy(rocha->categoria, categoria);
 }
-void setDataColeta(RochaMineral* rocha, const char* dataColeta){
+void setDataColeta(RochaMineral* rocha, char* dataColeta){
     strcpy(rocha->dataColeta, dataColeta);
 }
 void setLocalizacao(RochaMineral* rocha, double latitude, double longitude){
