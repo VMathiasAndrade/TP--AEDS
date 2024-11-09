@@ -7,12 +7,13 @@ void FLVaziaMine(ListaMinerais* LMinerais){
     LMinerais->last = LMinerais->first;
 }
 
-int LEhVaziaMine(ListaMinerais* LMineirais){
-    return (LMineirais->last == LMineirais->first);
+int LEhVaziaMine(ListaMinerais* LMinerais){
+    return (LMinerais->last == LMinerais->first);
 }
 
 int LInsereMine(ListaMinerais* LMinerais, Mineral x){
-    if(LMinerais->last == MaxTam) return 0;
+    if(LMinerais->last == MaxTam) 
+    return 0;//Lista cheia
     LMinerais->ListaM[LMinerais->last++] = x;
     return 1;
 }
@@ -36,14 +37,15 @@ int LRetiraMine(ListaMinerais* LMinerais, char* nome, Mineral *pX){
     return 0;
 }
 
-void LImprimeMine(ListaMinerais* LMinerias){
+void LImprimeMine(ListaMinerais* LMinerais){
     int i;
 
     printf("Info dos minerais:\n");
-    for (i = LMinerias->first; i < LMinerias->last; i++) {
-        printf("Nome: %s\n", LMinerias->ListaM[i].nome);
-        printf("Cor: %s\n", LMinerias->ListaM[i].cor);
-        printf("Dureza: %.3lf\n", LMinerias->ListaM[i].dureza);
-        printf("Reatividade: %.3lf\n\n", LMinerias->ListaM[i].reativ);
+    for (i = LMinerais->first; i < LMinerais->last; i++) {
+        printf("Nome: %s\n", LMinerais->ListaM[i].nome);
+        printf("Cor: %s\n", LMinerais->ListaM[i].cor);
+        printf("Dureza: %.3lf\n", LMinerais->ListaM[i].dureza);
+        printf("Reatividade: %.3lf\n\n", LMinerais->ListaM[i].reativ);
+        printf("Propriedades: %s\n", LMinerais->ListaM[i].propriedades);
     }
 }
