@@ -46,6 +46,5 @@ void LImprimeMine(ListaMinerais* LMinerais){
         printf("Cor: %s\n", LMinerais->ListaM[i].cor);
         printf("Dureza: %.3lf\n", LMinerais->ListaM[i].dureza);
         printf("Reatividade: %.3lf\n\n", LMinerais->ListaM[i].reativ);
-        printf("Propriedades: %s\n", LMinerais->ListaM[i].propriedades);
     }
 }
