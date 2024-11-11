@@ -1,6 +1,7 @@
 #ifndef SONDA_H
 #define SONDA_H
 #include "Compartimento.h"
+
 typedef struct 
 {
     int id;

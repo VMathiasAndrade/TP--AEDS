@@ -2,29 +2,26 @@
 #define COMPARTIMENTO_H
 #include "RochaM.h"
 
-typedef RochaMineral TipoRocha;//OLHAR NA MONITORIA SE ESTÁ CORRETO ISSO AQUI, OU ENTAO COMO FAZER ISSO. 
-
-typedef struct Celula* Apontador;
-typedef struct Celula
+typedef struct CelulaRocha* ApontadorRocha;
+typedef struct CelulaRocha
 {
     RochaMineral rocha;
-    struct Celula* pProx;
+    struct CelulaRocha* pProx;
 } RCelula;
 
 typedef struct 
 {
-    Apontador pPrimeiro;
-    Apontador pUltimo;
-}TCompartimento;
+    ApontadorRocha pPrimeiro;
+    ApontadorRocha pUltimo;
+}RCompartimento;
 
-void FLVazia(TCompartimento* rLista);
-int LTamanho(TCompartimento* rLista);
-int LEhVazia(TCompartimento* rLista);
-void LImprime(TCompartimento* rLista);
-float LPeso(TCompartimento* rLista);
-void LTrocaR(TCompartimento* rLista);
-int LInsere(TCompartimento* rLista, RochaMineral *pRocha);
-int LRetira(TCompartimento* rLista, RochaMineral* categoria);
-
+void FLVazia(RCompartimento* rLista);
+int LTamanho(RCompartimento* rLista);
+int LEhVazia(RCompartimento* rLista);
+void LImprime(RCompartimento* rLista);
+float LPeso(RCompartimento* rLista);
+void LTrocaR(RCompartimento* rLista);
+int LInsere(RCompartimento* rLista, RochaMineral *pRocha);
+int LRetira(RCompartimento* rLista, RochaMineral *pRocha);
 
 #endif

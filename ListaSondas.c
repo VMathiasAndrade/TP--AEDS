@@ -5,39 +5,50 @@
 
 void FLVaziaSonda(SLista *slista)
 {
-    slista->pPrimeiro = (Apontador)malloc(sizeof(SCelula));
+    slista->pPrimeiro = (ApontadorSonda)malloc(sizeof(SCelula));
     slista->pUltimo = slista->pPrimeiro;
     slista->pPrimeiro->pProx = NULL;
 }
 
-void LInsereSonda(SLista *sLista, Sonda *pSonda)
+int LInsereSonda(SLista *sLista, Sonda *pSonda)
 {
-    sLista->pUltimo->pProx = (Apontador)malloc(sizeof(SCelula));
+    sLista->pUltimo->pProx = (ApontadorSonda)malloc(sizeof(SCelula));
     sLista->pUltimo = sLista->pUltimo->pProx;
     sLista->pUltimo->sonda= *pSonda;
     sLista->pUltimo->pProx=NULL;
+    return 1;
 }
-void LRetiraSonda(SLista *sLista, Sonda id){
-    Apontador pAnterior = sLista->pPrimeiro;
-    Apontador pAtual = sLista->pUltimo;
+int LRetiraSonda(SLista *sLista, Sonda *pSonda){
+    if (sLista == NULL || sLista->pPrimeiro == NULL) {
+        return 0; // Trata lista vazia ou nula
+    }
 
-    while(pAtual!=NULL){
-        if(strcmp(pAtual->sonda.id, id)==0){
-            pAnterior->pProx=pAtual->pProx;
-            if(pAtual== sLista->pUltimo){
-                sLista->pUltimo=pAnterior;
+    ApontadorSonda pAnterior = NULL;
+    ApontadorSonda pAtual = sLista->pPrimeiro;
+
+    while(pAtual != NULL){
+        if(pAtual->sonda.id == pSonda->id){
+            if (pAnterior == NULL) {
+                sLista->pPrimeiro = pAtual->pProx; // Remove o primeiro elemento
+            } else {
+                pAnterior->pProx = pAtual->pProx; // Remove elementos intermediários ou o último
             }
+
+            if (pAtual == sLista->pUltimo) {
+                sLista->pUltimo = pAnterior;  // Atualiza o último ponteiro
+            }
+
             free(pAtual);
             return 1;
         }
-        pAnterior=pAtual;
-        pAtual=pAtual->pProx;
+        pAnterior = pAtual;
+        pAtual = pAtual->pProx;
     }
     return 0;
 }
 void ImprimeLSonda(SLista *sLista){
     int cont=0;
-    Apontador pAux;
+    ApontadorSonda pAux;
     pAux=sLista->pPrimeiro->pProx;
     while(pAux!=NULL){
         printf("Sonda %d\n", cont++);

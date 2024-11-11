@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Sonda.h"
 
 void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, char* EstaLigada, RochaMineral* Rocha){
