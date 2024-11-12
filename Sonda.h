@@ -15,15 +15,15 @@ void LigaSonda(Sonda* sonda, char* EstaLigada);
 void DesligaSonda(Sonda* sonda, char* EstaLigada);
 void MoveSonda(Sonda* sonda, double latitude, double longitude);
 
-int getId(Sonda* sonda);
-double getLat(Sonda* sonda);
-double getLong(Sonda* sonda);
-char* getEstaLigada(Sonda* sonda);
+int getIds(Sonda* sonda);
+double getLats(Sonda* sonda);
+double getLongs(Sonda* sonda);
+char* getEstaLigadas(Sonda* sonda);
 
-void setId(Sonda* sonda, int id);
-void setLat(Sonda* sonda, double latitude);
-void setLong(Sonda* sonda, double longitude);
-void setEstaLigada(Sonda* sonda, char* EstaLigada);
+void setIds(Sonda* sonda, int id);
+void setLats(Sonda* sonda, double latitude);
+void setLongs(Sonda* sonda, double longitude);
+void setEstaLigadas(Sonda* sonda, char* EstaLigada);
 
 
 #endif

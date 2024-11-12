@@ -4,10 +4,10 @@
 #include "Sonda.h"
 
 void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, char* EstaLigada, RochaMineral* Rocha){
-    setId(sonda, id);
-    setLat(sonda, latitude);
-    setLong(sonda, longitude);
-    strcpy((*sonda).EstaLigada, "Nao");
+    setIds(sonda, id);
+    setLats(sonda, latitude);
+    setLongs(sonda, longitude);
+    setEstaLigadas(sonda, EstaLigada);
 }
 void LigaSonda(Sonda* sonda, char* EstaLigada){
     strcpy((*sonda).EstaLigada, "Sim");
@@ -16,6 +16,35 @@ void DesligaSonda(Sonda* sonda, char* EstaLigada){
     strcpy((*sonda).EstaLigada, "Nao");
 }
 void MoveSonda(Sonda* sonda, double latitude, double longitude){
-    setLat(sonda, latitude);
-    setLong(sonda, longitude);
+    setLats(sonda, latitude);
+    setLongs(sonda, longitude);
+}
+
+int getIds(Sonda* sonda){
+    return sonda->id;
+}
+double getLats(Sonda* sonda){
+    return sonda->latitude;
+}
+double getLongs(Sonda* sonda){
+
+   return sonda -> longitude; 
+}
+
+char* getEstaLigadas(Sonda* sonda){
+    return sonda -> EstaLigada;
+}
+
+
+void setIds(Sonda* sonda, int id){
+    sonda->id = id;
+}
+void setLats(Sonda* sonda, double latitude){
+    sonda->latitude = latitude;
+}
+void setLongs(Sonda* sonda, double longitude){
+    sonda->longitude = longitude;
+}
+void setEstaLigadas(Sonda* sonda, char* EstaLigada){
+    strcpy(sonda->EstaLigada, EstaLigada);
 }
