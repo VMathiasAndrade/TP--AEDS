@@ -11,9 +11,9 @@ void InicializaRocha(RochaMineral* rocha, int id, float peso, char* categoria, c
     setLocalizacao(rocha, latitude, longitude);    
 }
 
-char* DefCategoria(RochaMineral* rocha){
+char* DefCategoria(ListaMinerais* minerais){
     int i;
-    int qtdMinerais = rocha->LMinerais.last - rocha->LMinerais.first;
+    int qtdMinerais = minerais->last - minerais.first;
 
     if(qtdMinerais == 0){
         strcpy(rocha->categoria, "Sem Minerais");
