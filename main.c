@@ -15,7 +15,7 @@ int main() {
 
     int N_Sondas;
     double lat_i, lon_i;
-    float c_i, v_i, nc_i
+    float c_i, v_i, nc_i;
     SLista sondas[N_Sondas];
     fscanf(arq, "%d", &N_Sondas);
     for (int i = 0; i < N_Sondas; i++)
@@ -28,7 +28,7 @@ int main() {
     double lat_r, long_r;
     float p_r;
     int id_s;
-    char[20] rocha_coletada;
+    char rocha_coletada[20];
     float peso_r;
     fscanf(arq, "%d", &N_op);
     for (int i = 0; i < N_op; i++)
