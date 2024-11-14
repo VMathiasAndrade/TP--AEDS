@@ -10,17 +10,33 @@ int main() {
     Mineral mineral3;
 
     RetornaMineral(&mineral1, "Ferrolita");
-    RetornaMineral(&mineral1, "Aquavitae");
-    RetornaMineral(&mineral1, "Calaris");
+    RetornaMineral(&mineral2, "Aquavitae");
+    RetornaMineral(&mineral3, "Calaris");
 
-    ListaMinerais minerais;
-    RochaMineral rocha;
+    RochaMineral rocha, rocha1, rocha2, rocha3;
     
-    FLVaziaMine(&minerais);
-    LInsereMine(&minerais, mineral1);
-    LInsereMine(&minerais, mineral2);
-    LInsereMine(&minerais, mineral3);
-    LImprimeMine(&minerais);
+    FLVaziaMine(&rocha.LMinerais);
+    LInsereMine(&rocha.LMinerais, mineral1);
+    LInsereMine(&rocha.LMinerais, mineral2);
+    LInsereMine(&rocha.LMinerais, mineral3);
+    LImprimeMine(&rocha.LMinerais);
+
+    InicializaRocha(&rocha, 124552, 12.0, DefCategoria(&rocha), "20/12/2024", -295536131.024, 25235.232);
+    InicializaRocha(&rocha1, 410001, 30.0, "Calquer", "20/12/2024", -295536131.024, 25235.232);
+    InicializaRocha(&rocha2, 124515, 19.0, "Terrolis", "19/12/2024", -1526131.024, 51252.232);
+    InicializaRocha(&rocha3, 124522, 15.0, "Terrolis", "20/12/2024", -2026131.124, 21252.214);
+
+    RCompartimento listaRocha;
+
+    FLVazia(&listaRocha);
+    LInsere(&listaRocha, &rocha);
+    LInsere(&listaRocha, &rocha1);
+    LInsere(&listaRocha, &rocha2);
+    LInsere(&listaRocha, &rocha3);
+    LRetira(&listaRocha, &rocha1);
+    LTrocaR(&listaRocha);
+    LImprime(&listaRocha);
+    
 
     return 0;
 }
