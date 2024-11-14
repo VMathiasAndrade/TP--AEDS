@@ -9,7 +9,7 @@ double reativ, dureza;
 
 void InicializaMineral(Mineral* mineral, char* nome, char* cor, double dureza, double reativ);
 
-Mineral RetornaMineral(Mineral* mineral,char* nome);
+void RetornaMineral(Mineral* mineral,char* nome);
 
 char* getNome(Mineral* mineral);
 char* getCor(Mineral* mineral);

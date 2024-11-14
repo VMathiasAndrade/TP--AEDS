@@ -11,9 +11,9 @@ void InicializaRocha(RochaMineral* rocha, int id, float peso, char* categoria, c
     setLocalizacao(rocha, latitude, longitude);    
 }
 
-char* DefCategoria(RochaMineral* rocha, ListaMinerais* minerais){
+char* DefCategoria(RochaMineral* rocha){
     int i;
-    int qtdMinerais = minerais->last - minerais->first;
+    int qtdMinerais = rocha->LMinerais.last;
 
     if(qtdMinerais == 0){
         strcpy(rocha->categoria, "Sem Minerais");
@@ -26,24 +26,24 @@ char* DefCategoria(RochaMineral* rocha, ListaMinerais* minerais){
     int temTerranita = 0;
     int temCalaris = 0;
 
-    for(i = minerais->first; i < minerais->last; i++){
+    for(i = rocha->LMinerais.first; i < rocha->LMinerais.last; i++){
        if(strcmp(rocha->LMinerais.ListaM[i].nome, "Ferrolita") == 0) {temFerrolita = 1;}
        else if(strcmp(rocha->LMinerais.ListaM[i].nome, "Solarium") == 0) {temSolarium = 1;}
        else if(strcmp(rocha->LMinerais.ListaM[i].nome, "Aquavitae") == 0) {temAquavitae = 1;}
        else if(strcmp(rocha->LMinerais.ListaM[i].nome, "Terranita") == 0) {temTerranita = 1;}
        else if(strcmp(rocha->LMinerais.ListaM[i].nome, "Calaris") == 0) {temCalaris = 1;}
-
-       if(temFerrolita && qtdMinerais == 1) {strcpy(rocha->categoria, "Ferrom");}
-       else if(temSolarium && qtdMinerais == 1) {strcpy(rocha->categoria, "Solaris");}
-       else if(temFerrolita && temAquavitae && qtdMinerais == 2) {strcpy(rocha->categoria, "Aquaferro");}
-       else if(temCalaris && temTerranita && qtdMinerais == 2) {strcpy(rocha->categoria, "Terrolis");}
-       else if(temFerrolita && temSolarium && qtdMinerais == 2) {strcpy(rocha->categoria, "Terrasol");}
-       else if(temAquavitae && temTerranita && qtdMinerais == 2) {strcpy(rocha->categoria, "Aquaterra");}
-       else if(temCalaris && temAquavitae && qtdMinerais == 2) {strcpy(rocha->categoria, "Calquer");}
-       else if(temSolarium && temFerrolita && qtdMinerais == 2) {strcpy(rocha->categoria, "Solarisfer");}
-       else if(temTerranita && temFerrolita && qtdMinerais == 2) {strcpy(rocha->categoria, "Terralis");}
-       else if(temAquavitae && temCalaris && temFerrolita && qtdMinerais == 3) {strcpy(rocha->categoria, "Aquacalis");}
     }
+
+    if(temFerrolita && qtdMinerais == 1) {strcpy(rocha->categoria, "Ferrom");}
+    else if(temSolarium && qtdMinerais == 1) {strcpy(rocha->categoria, "Solaris");}
+    else if(temFerrolita && temAquavitae && qtdMinerais == 2) {strcpy(rocha->categoria, "Aquaferro");}
+    else if(temCalaris && temTerranita && qtdMinerais == 2) {strcpy(rocha->categoria, "Terrolis");}
+    else if(temFerrolita && temSolarium && qtdMinerais == 2) {strcpy(rocha->categoria, "Terrasol");}
+    else if(temAquavitae && temTerranita && qtdMinerais == 2) {strcpy(rocha->categoria, "Aquaterra");}
+    else if(temCalaris && temAquavitae && qtdMinerais == 2) {strcpy(rocha->categoria, "Calquer");}
+    else if(temSolarium && temFerrolita && qtdMinerais == 2) {strcpy(rocha->categoria, "Solarisfer");}
+    else if(temTerranita && temFerrolita && qtdMinerais == 2) {strcpy(rocha->categoria, "Terralis");}
+    else if(temAquavitae && temCalaris && temFerrolita && qtdMinerais == 3) {strcpy(rocha->categoria, "Aquacalis");}
 }
 
 void setIdentificador(RochaMineral* rocha, int id){
