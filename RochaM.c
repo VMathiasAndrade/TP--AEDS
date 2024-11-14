@@ -11,9 +11,9 @@ void InicializaRocha(RochaMineral* rocha, int id, float peso, char* categoria, c
     setLocalizacao(rocha, latitude, longitude);    
 }
 
-char* DefCategoria(ListaMinerais* minerais){
+char* DefCategoria(RochaMineral* rocha, ListaMinerais* minerais){
     int i;
-    int qtdMinerais = minerais->last - minerais.first;
+    int qtdMinerais = minerais->last - minerais->first;
 
     if(qtdMinerais == 0){
         strcpy(rocha->categoria, "Sem Minerais");
@@ -26,7 +26,7 @@ char* DefCategoria(ListaMinerais* minerais){
     int temTerranita = 0;
     int temCalaris = 0;
 
-    for(i = rocha->LMinerais.first; i < rocha->LMinerais.last; i++){
+    for(i = minerais->first; i < minerais->last; i++){
        if(strcmp(rocha->LMinerais.ListaM[i].nome, "Ferrolita") == 0) {temFerrolita = 1;}
        else if(strcmp(rocha->LMinerais.ListaM[i].nome, "Solarium") == 0) {temSolarium = 1;}
        else if(strcmp(rocha->LMinerais.ListaM[i].nome, "Aquavitae") == 0) {temAquavitae = 1;}
