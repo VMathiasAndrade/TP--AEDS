@@ -37,6 +37,19 @@ int main() {
     LTrocaR(&listaRocha);
     LImprime(&listaRocha);
     
+    printf("Peso lista de minerais: %.2f\n", LPeso(&listaRocha));
+    
+    Sonda sonda1, sonda2;
+
+    sonda1.Rocha = rocha3;
+    sonda2.Rocha = rocha;
+
+    SLista listaSondas;
+
+    FLVaziaSonda(&listaSondas);
+    LInsereSonda(&listaSondas, &sonda1);
+    LInsereSonda(&listaSondas, &sonda2);
+    ImprimeLSonda(&listaSondas);
 
     return 0;
 }

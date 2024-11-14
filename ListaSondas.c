@@ -14,8 +14,8 @@ int LInsereSonda(SLista *sLista, Sonda *pSonda)
 {
     sLista->pUltimo->pProx = (ApontadorSonda)malloc(sizeof(SCelula));
     sLista->pUltimo = sLista->pUltimo->pProx;
-    sLista->pUltimo->sonda= *pSonda;
-    sLista->pUltimo->pProx=NULL;
+    sLista->pUltimo->sonda = *pSonda;
+    sLista->pUltimo->pProx = NULL;
     return 1;
 }
 int LRetiraSonda(SLista *sLista, Sonda *pSonda){
@@ -53,7 +53,8 @@ void ImprimeLSonda(SLista *sLista){
     while(pAux!=NULL){
         printf("Sonda %d\n", cont++);
         printf("ID: %d\n", pAux->sonda.id);
-        printf("Latitude e longitude: %f %f", pAux->sonda.latitude, pAux->sonda.longitude);
-        printf("Status da sonda: %s", pAux->sonda.EstaLigada);
+        printf("Latitude e longitude: %f %f\n", pAux->sonda.latitude, pAux->sonda.longitude);
+        printf("Status da sonda: %s\n\n", pAux->sonda.EstaLigada);
+        pAux = pAux->pProx;
     }
 }
