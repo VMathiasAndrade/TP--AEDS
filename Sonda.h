@@ -10,9 +10,9 @@ typedef struct
     RochaMineral Rocha;//Olhar na monitoria qual variavel sera usada como "compartimento" da sonda
 }Sonda;    
 
-void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, char* EstaLigada, RochaMineral* Rocha);
-void LigaSonda(Sonda* sonda, char* EstaLigada);
-void DesligaSonda(Sonda* sonda, char* EstaLigada);
+void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, char* EstaLigada);
+void LigaSonda(Sonda* sonda);
+void DesligaSonda(Sonda* sonda);
 void MoveSonda(Sonda* sonda, double latitude, double longitude);
 
 int getIds(Sonda* sonda);

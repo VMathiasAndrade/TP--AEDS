@@ -3,16 +3,16 @@
 #include <string.h>
 #include "Sonda.h"
 
-void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, char* EstaLigada, RochaMineral* Rocha){
+void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, char* EstaLigada){
     setIds(sonda, id);
     setLats(sonda, latitude);
     setLongs(sonda, longitude);
     setEstaLigadas(sonda, EstaLigada);
 }
-void LigaSonda(Sonda* sonda, char* EstaLigada){
+void LigaSonda(Sonda* sonda){
     strcpy((*sonda).EstaLigada, "Sim");
 }
-void DesligaSonda(Sonda* sonda, char* EstaLigada){
+void DesligaSonda(Sonda* sonda){
     strcpy((*sonda).EstaLigada, "Nao");
 }
 void MoveSonda(Sonda* sonda, double latitude, double longitude){

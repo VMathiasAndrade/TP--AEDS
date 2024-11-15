@@ -49,12 +49,14 @@ int LRetiraSonda(SLista *sLista, Sonda *pSonda){
 void ImprimeLSonda(SLista *sLista){
     int cont=0;
     ApontadorSonda pAux;
-    pAux=sLista->pPrimeiro->pProx;
+    pAux = sLista->pPrimeiro->pProx;
     while(pAux!=NULL){
         printf("Sonda %d\n", cont++);
         printf("ID: %d\n", pAux->sonda.id);
+        printf("Rocha(s): %s\n", pAux->sonda.Rocha.categoria);
         printf("Latitude e longitude: %f %f\n", pAux->sonda.latitude, pAux->sonda.longitude);
         printf("Status da sonda: %s\n\n", pAux->sonda.EstaLigada);
+        
         pAux = pAux->pProx;
     }
 }
