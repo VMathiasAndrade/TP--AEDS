@@ -91,12 +91,14 @@ int main() {
                 break;
             }
             case 'I':
-            
-                    
-
+                SLista SondaLista;
+                ImprimeLSondaID(&SondaLista);
                 break;
             case 'E':
-                
+                for(int j = 0; j< N_Sondas; j++){
+                    Sonda sonda;
+                    MoveSonda(&sonda, 0.0, 0.0);
+                }
                 break;
             default:
                 break;

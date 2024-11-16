@@ -59,7 +59,7 @@ void ImprimeLSonda(SLista *sLista){
         
         pAux = pAux->pProx;
     }
-void ImprimeLSondaID(SLista* sLista){
+void ImprimeLSondaID(SLista *sLista){
     if (sLista == NULL) {
         printf("Nenhuma sonda encontrada.\n");
         return;
@@ -70,9 +70,44 @@ void ImprimeLSondaID(SLista* sLista){
     pAux = sLista->pPrimeiro;
     while(pAux!= NULL){
         printf(" %d \n", pAux->sonda.id);
-        printf(" %s %d \n", pAux->sonda.categoria, pAux->sonda.peso);
-        
+        printf(" %s %f \n", pAux->sonda.categoria, pAux->sonda.peso);
+        pAux = pAux->pProx;
         
     }
 }    
+void MoveOrigem(SLista *sLista){
+    int cont = 0;
+    ApontadorSonda pAux;
+    pAux = SLista->pPrimeiro;
+    while(pAux!=NULL){
+        pAux->sonda.latitude = 0.0;
+        pAux->sonda.longitude = 0.0;
+        pAux = pAux->pProx;
+    }
+}
+
+void RedistribuirRocha(SLista* sLista){
+    int pesoTotal = 0, NSondas = 0;
+    ApontadorSonda pAux;
+    pAux = SLista -> pPrimeiro;
+
+    while (pAux != NULL) {
+       pesoTotal += calcularPesoTotal(pAux->sonda.peso);
+       NSondas++;
+       pAux = pAux->pProximo;
+
+    }
+
+    if (NSondas == 0) return;
+
+    int PesoIdeal = pesoTotal / NSondas;
+
+    RCompartimento rLista;
+    ty =0; 
+    
+    {
+    
+    }
+    
+}
 }

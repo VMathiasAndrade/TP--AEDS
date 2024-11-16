@@ -21,4 +21,6 @@ int LInsereSonda(SLista* sLista, Sonda* pSonda);
 int LRetiraSonda(SLista* sLista, Sonda *pSonda);
 void ImprimeLSonda(SLista* sLista);
 void ImprimeLSondaID(SLIsta* sLista);
+void MoveOrigem(SLista* sLista);
+void RedistribuirRocha(SLista* sLista);
 #endif

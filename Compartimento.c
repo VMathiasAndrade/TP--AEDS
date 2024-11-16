@@ -145,4 +145,20 @@ void LTrocaR(RCompartimento* rLista) {
         }
         free(maisLeve);
     }
+
+float calcularPesoTotal(RCompartimento* rLista) {
+    if(rLista == NULL || rLista->pPrimeiro == NULL) {
+      return 0;
+}
+
+int PesoTotal = 0;
+pAux = rLista->pPrimeiro;
+
+while (pAux != NULL)
+{
+    pesoTotal += pAux->rocha.peso;
+    pAux = pAux->pProximo;
+}
+return pesoTotal;  
+}
 }  

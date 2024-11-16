@@ -11,10 +11,8 @@ void InicializaMineral(Mineral* mineral, char *nome, char *cor, double dureza, d
 }
 void RetornaMineral(Mineral* mineral, char* nome){
     int x= 1;
-    // while (x=1){//while foi feito para se caso o usuario digitar o nome de uma pedra inexistente, ele poder digitar novamente a pedra desejada.
-    if (strcmp(nome, "Ferrolita") == 0) {
         strcpy(mineral->nome, "Ferrolita");
-        strcpy(mineral->cor, "Acinzentado");//ATENÇÃO: CASO DÊ ALGUM ERRO, VERIFICAR SE REALMENTE DEVE USAR (*MINERAL) AO INVES DE MINERAL.
+        strcpy(mineral->cor, "Acinzentado");
         mineral->dureza = 0.5;
         mineral->reativ = 0.7;  
         x=0;
