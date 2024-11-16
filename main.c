@@ -16,16 +16,19 @@ int main() {
         int N_Sondas;
         double lat_i, long_i;
         float c_i, v_i, nc_i;
-
+        printf("Digite o numero de sondas");
         scanf("%d", &N_Sondas);
         for(int i = 0; i <= N_Sondas; i++){
+            printf("Digite os dados das sondas: (latitude, longitude, capacidade maxima, velocidade e combustivel)\n");
             scanf("%lf %lf %f %f %f", &lat_i, &long_i, &c_i, &v_i, &nc_i);
         }
 
         int N_op;
+        printf("Digite o numero de operações: \n")
         scanf("%d", &N_op);
         for(int i = 0; i <= N_op; i++){
             char operacao;
+            printf("Digite a operação: \n");
             scanf("%c", &operacao);
 
             switch (operacao) {
@@ -88,7 +91,9 @@ int main() {
                 break;
             }
             case 'I':
-                
+            
+                    
+
                 break;
             case 'E':
                 

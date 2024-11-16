@@ -49,7 +49,7 @@ int LRetiraSonda(SLista *sLista, Sonda *pSonda){
 void ImprimeLSonda(SLista *sLista){
     int cont=0;
     ApontadorSonda pAux;
-    pAux = sLista->pPrimeiro->pProx;
+    pAux = sLista->pPrimeiro;
     while(pAux!=NULL){
         printf("Sonda %d\n", cont++);
         printf("ID: %d\n", pAux->sonda.id);
@@ -59,4 +59,20 @@ void ImprimeLSonda(SLista *sLista){
         
         pAux = pAux->pProx;
     }
+void ImprimeLSondaID(SLista* sLista){
+    if (sLista == NULL) {
+        printf("Nenhuma sonda encontrada.\n");
+        return;
+    }
+    
+    int cont = 0;
+    ApontadorSonda pAux;
+    pAux = sLista->pPrimeiro;
+    while(pAux!= NULL){
+        printf(" %d \n", pAux->sonda.id);
+        printf(" %s %d \n", pAux->sonda.categoria, pAux->sonda.peso);
+        
+        
+    }
+}    
 }
