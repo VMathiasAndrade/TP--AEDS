@@ -24,91 +24,58 @@ int main() {
         }
 
         int N_op;
-        printf("Digite o numero de operações: \n")
+        printf("Digite o numero de operacoes: \n");
         scanf("%d", &N_op);
         for(int i = 0; i <= N_op; i++){
             char operacao;
-            printf("Digite a operação: \n");
+            printf("Digite a operacao: \n");
             scanf("%c", &operacao);
 
             switch (operacao) {
             case 'R':{
 
-                double lat_r, long_r;
-                float p_r;
-                ListaMinerais minerais[3];
+                double lat_i, long_i;
+                float p_i;
+                char cat_i[50];
+                char minerais_str[255];
+                char* buffer; 
                 char linha[255];
 
+                printf("Digite a latitude, longitude, peso, categoria e até 3 minerais (SEPARE POR ESPAÇO): \n");
+
                 fgets(linha, sizeof(linha), stdin);
-
-                if ((fgets(linha, sizeof(linha), stdin)) != NULL)
+                fgets(linha, sizeof(linha), stdin);
+                
+                   
+                buffer = strtok(linha, "\n");
+                if (buffer != NULL) lat_i = atof(buffer);
+                buffer = strtok(NULL, "\n");
+                if (buffer != NULL) long_i = atof(buffer);
+                buffer = strtok(linha, "\n");
+                if (buffer != NULL) p_i = atof(buffer);
+                buffer = strtok(NULL, "\n");
+                if (buffer != NULL) strcpy(cat_i, buffer);
+                
+                while ((buffer = strtok(NULL, "  \n")) != NULL)
                 {
-                    linha[strcspn(linha, "\n")] = '\0';
-
-                    char *token = strtok(linha, " ");
-                    sscanf(token, "%lf", &lat_r);
-                    token = strtok(NULL, " ");
-                    sscanf(token, "%lf", &long_r);
-                    token = strtok(NULL, " ");
-                    sscanf(token, "%f", &p_r);
-                    token = strtok(NULL, " ");
-                    
-                    int i = 0;
-                    while (token != NULL)
-                    {
-                        strcpy(minerais[i].ListaM->nome, token);
-                        i++;
-                        strtok(NULL, " ");
-                    }
+                    if (strlen(minerais_str) > 0) {
+                        strcat(minerais_str, ", ");
                 }
-
-                RochaMineral novaRocha;
-                novaRocha.latitude = lat_r;
-                novaRocha.longitude = long_r;
-                novaRocha.peso = p_r;
-                
-                novaRocha.LMinerais = (ListaMinerais *) malloc(3 * sizeof(ListaMinerais));
-                
-                for(int j = 0; j < 3; j++){
-                    novaRocha.LMinerais[j].ListaM = (Mineral *)malloc(sizeof(Mineral));
-                    if (novaRocha.LMinerais[j].ListaM == NULL) {
-                        perror("Erro ao alocar memória para ListaM");
-                        exit(EXIT_FAILURE);
-                    }
-
-                    strcpy(novaRocha.LMinerais[j].ListaM->nome, minerais[j].ListaM->nome);
-
-                }   
-
-                printf("Categoria: %s\n", DefCategoria(&novaRocha));
-
-            // Liberar a memória alocada para LMinerais (importante!)
-                for (int j = 0; j < 3; j++) {
-                    free(&novaRocha.LMinerais[j].ListaM);
-                    }
-                    free(&novaRocha.LMinerais);
+                strcat(minerais_str, buffer);
+                }
+ 
+                printf("%lf %lf %.2f %s %s\n", lat_i, long_i, p_i, cat_i, minerais_str);
 
                 break;
             }
             case 'I':
-                SLista SondaLista;
-                ImprimeLSondaID(&SondaLista);
                 break;
             case 'E':
-                for(int j = 0; j< N_Sondas; j++){
-                    Sonda sonda;
-                    MoveSonda(&sonda, 0.0, 0.0);
-                }
-                break;
-            default:
-                break;
+               break;
+        
             }
         }
     }
     
     return 0;
-}
-
-void LeituraTerminal(){
-    
 }

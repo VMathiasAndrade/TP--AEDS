@@ -11,12 +11,15 @@ void InicializaMineral(Mineral* mineral, char *nome, char *cor, double dureza, d
 }
 void RetornaMineral(Mineral* mineral, char* nome){
     int x= 1;
+    if (strcmp(nome, "Ferrolita")){
         strcpy(mineral->nome, "Ferrolita");
         strcpy(mineral->cor, "Acinzentado");
         mineral->dureza = 0.5;
         mineral->reativ = 0.7;  
         x=0;
     }
+    
+    
     else if (strcmp(nome, "Solarium") == 0) {
         strcpy(mineral->nome, "Solarium");
         strcpy(mineral->cor,"Amarelo");
