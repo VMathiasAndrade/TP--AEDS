@@ -31,11 +31,11 @@ int LRetiraSonda(SLista *sLista, Sonda *pSonda){
             if (pAnterior == NULL) {
                 sLista->pPrimeiro = pAtual->pProx; // Remove o primeiro elemento
             } else {
-                pAnterior->pProx = pAtual->pProx; // Remove elementos intermediários ou o último
+                pAnterior->pProx = pAtual->pProx; //Remove elementos intermediários ou o último
             }
 
             if (pAtual == sLista->pUltimo) {
-                sLista->pUltimo = pAnterior;  // Atualiza o último ponteiro
+                sLista->pUltimo = pAnterior;  //Atualiza o último ponteiro
             }
 
             free(pAtual);
@@ -59,12 +59,15 @@ void ImprimeLSonda(SLista *sLista){
         
         pAux = pAux->pProx;
     }
+}
+void ImprimeLSondaID(SLista *sLista){
+    ApontadorSonda pAux;
+    pAux = sLista->pPrimeiro;
+    while(pAux!= NULL){
+        printf(" %d \n", pAux->sonda.id);
+        printf(" %s %f \n", pAux->sonda.Rocha.categoria, pAux->sonda.Rocha.peso);
+        pAux = pAux->pProx;
+    }
 }    
-
-        
-    
-    
-
-    
 
 

@@ -7,7 +7,7 @@ typedef struct
     int id;
     double latitude, longitude;
     char EstaLigada[3];
-    RochaMineral Rocha;//Olhar na monitoria qual variavel sera usada como "compartimento" da sonda
+    RochaMineral Rocha;
 }Sonda;    
 
 void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, char* EstaLigada);

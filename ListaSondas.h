@@ -20,4 +20,5 @@ void FLVaziaSonda(SLista* sLista);
 int LInsereSonda(SLista* sLista, Sonda* pSonda);
 int LRetiraSonda(SLista* sLista, Sonda *pSonda);
 void ImprimeLSonda(SLista* sLista);
+void ImprimeLSondaID(SLista *sLista);
 #endif
