@@ -4,21 +4,24 @@
 
 typedef Sonda TipoSonda;
 
-typedef struct CelulaSonda* ApontadorSonda;
+typedef struct CelulaSonda *ApontadorSonda;
 typedef struct CelulaSonda
 {
     Sonda sonda;
-    struct CelulaSonda* pProx;
+    struct CelulaSonda *pProx;
 } SCelula;
 
-typedef struct{
+typedef struct
+{
     ApontadorSonda pPrimeiro;
     ApontadorSonda pUltimo;
-}SLista;
+} SLista;
 
-void FLVaziaSonda(SLista* sLista);
-int LInsereSonda(SLista* sLista, Sonda* pSonda);
-int LRetiraSonda(SLista* sLista, Sonda *pSonda);
-void ImprimeLSonda(SLista* sLista);
+void FLVaziaSonda(SLista *sLista);
+int LInsereSonda(SLista *sLista, Sonda *pSonda);
+int LRetiraSonda(SLista *sLista, Sonda *pSonda);
+void ImprimeLSonda(SLista *sLista);
 void ImprimeLSondaID(SLista *sLista);
+void MoveOrigem(SLista* sLista);
+void OperacaoI(SLista *sLista);
 #endif
