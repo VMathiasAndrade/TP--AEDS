@@ -22,19 +22,6 @@ int LTamanho(RCompartimento *rLista)
     return cont;
 }
 
-float LPeso(RCompartimento *rLista)
-{
-    float pesoTotal = 0;
-    ApontadorRocha pAux = rLista->pPrimeiro->pProx;
-
-    while (pAux != NULL)
-    {
-        pesoTotal += pAux->rocha.peso;
-        pAux = pAux->pProx;
-    }
-    return pesoTotal;
-}
-
 int LEhVazia(RCompartimento *rLista)
 {
     return (rLista->pPrimeiro == rLista->pUltimo);

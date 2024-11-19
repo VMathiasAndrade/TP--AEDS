@@ -1,25 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "ListaSondas.h"
 
-void FLVaziaSonda(SLista *slista)
-{
+void FLVaziaSonda(SLista* slista) {
     slista->pPrimeiro = (ApontadorSonda)malloc(sizeof(SCelula));
     slista->pUltimo = slista->pPrimeiro;
     slista->pPrimeiro->pProx = NULL;
 }
 
-int LInsereSonda(SLista *sLista, Sonda *pSonda)
-{
+int LInsereSonda(SLista* sLista, Sonda *pSonda) {
     sLista->pUltimo->pProx = (ApontadorSonda)malloc(sizeof(SCelula));
     sLista->pUltimo = sLista->pUltimo->pProx;
     sLista->pUltimo->sonda = *pSonda;
     sLista->pUltimo->pProx = NULL;
     return 1;
 }
-int LRetiraSonda(SLista *sLista, Sonda *pSonda)
-{
+
+int LRetiraSonda(SLista* sLista, Sonda *pSonda) {
     if (sLista == NULL || sLista->pPrimeiro == NULL)
     {
         return 0; // Trata lista vazia ou nula
@@ -28,8 +27,7 @@ int LRetiraSonda(SLista *sLista, Sonda *pSonda)
     ApontadorSonda pAnterior = NULL;
     ApontadorSonda pAtual = sLista->pPrimeiro;
 
-    while (pAtual != NULL)
-    {
+    while (pAtual != NULL) {
         if (pAtual->sonda.id == pSonda->id)
         {
             if (pAnterior == NULL)
@@ -54,7 +52,8 @@ int LRetiraSonda(SLista *sLista, Sonda *pSonda)
     }
     return 0;
 }
-void ImprimeLSonda(SLista *sLista) {
+
+void ImprimeLSonda(SLista* sLista) {
     int cont = 0;
     ApontadorSonda pAux = pAux = sLista->pPrimeiro->pProx;
     while (pAux != NULL)
@@ -67,32 +66,75 @@ void ImprimeLSonda(SLista *sLista) {
         pAux = pAux->pProx;
     }
 }
-/*void OperacaoI(SLista *sLista){
-    SCelula* pAux;
-    pAux= sLista->pPrimeiro->pProx;
-    while(pAux != NULL){
-        Sonda* p_sonda = &pAux->sonda;
-        printf("ID: %d\n", p_sonda->id);
-        printf("%.s, %.2f\n", p_sonda->compartimento_sonda.pPrimeiro->rocha.categoria, p_sonda->compartimento_sonda.pPrimeiro->rocha.peso);
 
-        if (LEhVazia(&p_sonda->compartimento_sonda)) {
-            printf("Compartimento Vazio. \n");
+Sonda* DistElclidiana(SLista* ListaS, double lat_r, double long_r) {
+    SCelula* pAux = ListaS->pPrimeiro->pProx;
+    Sonda* pSonda;
+    double lat_i, long_i;
+    float menorDist = 1000000, distSonda = 0;
+
+    while (pAux != NULL) {
+        lat_i = pAux->sonda.latitude;
+        long_i = pAux->sonda.longitude;
+        distSonda = sqrt(pow(lat_r - lat_i, 2) + pow(long_r - long_i, 2));
+        if (menorDist >= distSonda) {
+            menorDist = distSonda;
+            pSonda = &pAux->sonda;
         }
+        pAux = pAux->pProx;
+    }
+    return pSonda;
+}
 
-        else {
-            printf("%s %.2f\n")
-        } 
+void InsereRochaS(SLista* ListaS, RochaMineral* rocha){
+    Sonda *sondaTemp = NULL;
+    double lat_r = rocha->latitude;
+    double long_r = rocha->longitude;
+    
+    ApontadorSonda pAux = ListaS->pPrimeiro->pProx;
+    Sonda *sonda = NULL;
 
-        pAux = pAux -> pProx;
+    while (pAux != NULL) {
+        sonda = &pAux->sonda;
+        float vCapacidade = LPeso(sonda) - rocha->peso;
+
+        if (vCapacidade >= rocha->peso) {
+            sondaTemp = DistElclidiana(ListaS, lat_r, long_r);
+        }
+        pAux = pAux->pProx;
+    }
+    if (sondaTemp == NULL) {
+        printf("Nao ha sonda perto!\n");
+    }
+    sondaTemp->latitude = rocha->longitude;
+    sondaTemp->longitude = rocha->longitude;
+
+    if (sondaTemp->cRocha.pPrimeiro == NULL) {
+        sondaTemp->cRocha.pPrimeiro = (RCelula*)malloc(sizeof(RCelula));
+        sondaTemp->cRocha.pUltimo = sondaTemp->cRocha.pPrimeiro;
     }
 
-}   
-*/
-void MoveOrigem(SLista *sLista)
-{
+    RCelula *nRocha = (RCelula*)malloc(sizeof(RCelula));
+    nRocha->rocha = *rocha;
+    nRocha->pProx = NULL;
+
+    if (sondaTemp->cRocha.pPrimeiro == NULL) {
+        sondaTemp->cRocha.pPrimeiro == nRocha;
+        sondaTemp->cRocha.pUltimo == nRocha;
+    } else {
+        sondaTemp->cRocha.pUltimo->pProx = nRocha;
+        sondaTemp->cRocha.pUltimo = nRocha;
+    }
+    sonda->capacidade -= rocha->peso;
+
+    printf("-------Sonda Coletada-------");
+    printf("Rocha coletada pela sonda: %d\n", sondaTemp->id);
+}
+
+void MoveOrigem(SLista* ListaS) {
     int cont = 0;
     ApontadorSonda pAux;
-    pAux = sLista->pPrimeiro;
+    pAux = ListaS->pPrimeiro;
     while (pAux != NULL)
     {
         pAux->sonda.latitude = 0.0;

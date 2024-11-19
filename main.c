@@ -54,6 +54,8 @@ int main() {
         float c_i, v_i, nc_i;
         SLista ListaSonda;
         RochaMineral rocha;
+        Mineral minel;
+        Sonda sondai;
 
         FLVaziaSonda(&ListaSonda);
 
@@ -62,8 +64,7 @@ int main() {
         printf("Digite os dados das sondas: (latitude, longitude, capacidade maxima, velocidade e combustivel)\n");
         for (int i = 0; i < N_Sondas; i++) {
             scanf("%lf %lf %f %f %f", &lat_i, &long_i, &c_i, &v_i, &nc_i);
-            Sonda sondai;
-            InicializaSonda(&sondai, (i+1), lat_i, long_i, "Sim");
+            InicializaSonda(&sondai, (i+1), lat_i, long_i, c_i, "Sim");
             LInsereSonda(&ListaSonda, &sondai);
         }
 
@@ -78,99 +79,36 @@ int main() {
             scanf("%c", &operacao);
             switch (operacao) {
             case 'R':{
-                    RochaMineral rocha;
                     double lat_r, long_r;
                     float p_r;
-                    char cat_r[50];
-                    char minerais_str[255] = "";
-                    char linha[255];
+                    char cat_r[20];
+                    char minerais_str[100];
 
-                    printf("Digite a latitude, longitude, peso, categoria e ate 3 minerais (SEPARE POR ESPACO):\n");
+                    printf("Digite a latitude, longitude, peso e ate 3 minerais (SEPARE POR ESPACO):\n");
+                    scanf("%lf %lf %f", lat_r, long_r, p_r);
                     getchar();
-                    fgets(linha, sizeof(linha), stdin);
-                    char *buffer = strtok(linha, " ");
-                    if (buffer != NULL)
-                        lat_r = atof(buffer);
-                    buffer = strtok(NULL, " ");
-                    if (buffer != NULL)
-                        long_r = atof(buffer);
-                    buffer = strtok(NULL, " ");
-                    if (buffer != NULL)
-                        p_r = atof(buffer);
-                    buffer = strtok(NULL, " ");
-                    if (buffer != NULL)
-                        strcpy(cat_r, buffer);
+                    fgets(minerais_str, sizeof(minerais_str), stdin);
+                    minerais_str[strcspn(minerais_str, "\n")] = '\0';
 
-                    while ((buffer = strtok(NULL, " ")) != NULL)
-                    {
-                        if (strlen(minerais_str) > 0)
-                        {
-                            strcat(minerais_str, ", ");
-                        }
-                        strcat(minerais_str, buffer);
+                    const char delim[2] = " ";
+                    char *buffer = strtok(minerais_str, delim);
+
+                    FLVaziaMine(&rocha.LMinerais);
+
+                    while (buffer != NULL) {
+                        RetornaMineral(&minel, buffer);
+                        LInsereMine(&rocha.LMinerais, minel);
+                        buffer = strtok(NULL, delim);
                     }
+                    
+                    int cont = 0;
 
-                    printf("%.6lf %.6lf %.2f %s %s",lat_r, long_r, p_r, cat_r, minerais_str);
+                    RochaMineral nRocha = InicializaRocha(&rocha, ++cont, p_r, DefCategoria(&rocha), "10/10/2024", lat_r, long_r);
 
-                    InicializaRocha()
 
                     break;
-
                 }
                 case 'I': {
-                    Mineral mineral1;
-                    Mineral mineral2;
-                    Mineral mineral3;
-                    Mineral mineral4;
-
-                    RetornaMineral(&mineral1, "Ferrolita");
-                    RetornaMineral(&mineral2, "Terranita");
-                    RetornaMineral(&mineral3, "Calaris");
-                    RetornaMineral(&mineral4, "Solarium");
-                    
-                    RochaMineral rocha1;
-                    RochaMineral rocha2;
-                    RochaMineral rocha3;
-
-                    FLVaziaMine(&rocha1.LMinerais);
-                    FLVaziaMine(&rocha2.LMinerais);
-                    FLVaziaMine(&rocha3.LMinerais);
-
-                    LInsereMine(&rocha1.LMinerais, mineral1);
-                    LInsereMine(&rocha1.LMinerais, mineral2);
-                    // Ferrolita e Terranita
-
-                    LInsereMine(&rocha2.LMinerais, mineral1);
-                    LInsereMine(&rocha2.LMinerais, mineral4);
-                    // Ferrolita e Solarium
-
-                    LInsereMine(&rocha3.LMinerais, mineral3);
-                    LInsereMine(&rocha3.LMinerais, mineral2);
-                    // Calaris e Terranita
-
-                    InicializaRocha(&rocha1, 1, 18, DefCategoria(&rocha1), "12/12/2024", 55.489421, -150.457196);
-                    InicializaRocha(&rocha2, 2, 21, DefCategoria(&rocha2), "04/12/2024", 16.718537, -148.127484);
-                    InicializaRocha(&rocha3, 3, 19, DefCategoria(&rocha3), "08/09/2024", 28.452065, 84.537518);
-
-                    Sonda sonda1;
-                    Sonda sonda2;
-                    Sonda sonda3;
-
-                    InicializaSonda(&sonda1, 1, -39.341947, 142.872653, "Sim");
-                    InicializaSonda(&sonda2, 2, -39.341947, 142.872653, "Sim");
-                    InicializaSonda(&sonda3, 3, -39.341947, 142.872653, "Sim");
-                    
-                    LInsere(&sonda1.cRocha, &rocha1);
-                    LInsere(&sonda1.cRocha, &rocha3);
-
-                    LInsere(&sonda2.cRocha, &rocha2);
-                    LInsere(&sonda2.cRocha, &rocha1);
-                    
-                    FLVaziaSonda(&ListaSonda);
-
-                    LInsereSonda(&ListaSonda, &sonda1);
-                    LInsereSonda(&ListaSonda, &sonda2);
-                    LInsereSonda(&ListaSonda, &sonda3);
 
                     OperacaoI(&ListaSonda);
 

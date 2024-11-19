@@ -5,7 +5,7 @@
 typedef Sonda TipoSonda;
 
 typedef struct CelulaSonda *ApontadorSonda;
-typedef struct CelulaSonda
+typedef struct CelulaSonda 
 {
     Sonda sonda;
     struct CelulaSonda *pProx;
@@ -17,11 +17,12 @@ typedef struct
     ApontadorSonda pUltimo;
 } SLista;
 
-void FLVaziaSonda(SLista *sLista);
-int LInsereSonda(SLista *sLista, Sonda *pSonda);
-int LRetiraSonda(SLista *sLista, Sonda *pSonda);
-void ImprimeLSonda(SLista *sLista);
-void ImprimeLSondaID(SLista *sLista);
-void MoveOrigem(SLista* sLista);
-void OperacaoI(SLista *sLista);
+void FLVaziaSonda(SLista* ListaS);
+int LInsereSonda(SLista* ListaS, Sonda *pSonda);
+int LRetiraSonda(SLista* ListaS, Sonda *pSonda);
+Sonda* DistElclidiana(SLista* ListaS, double lat_r, double long_r);
+void InsereRochaS(SLista* ListaS, RochaMineral* rocha);
+void ImprimeLSonda(SLista* ListaS);
+void MoveOrigem(SLista* ListaS);
+void OperacaoI(SLista* ListaS);
 #endif

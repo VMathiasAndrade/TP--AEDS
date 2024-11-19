@@ -3,13 +3,15 @@
 #include <string.h>
 #include "RochaM.h"
 
-void InicializaRocha(RochaMineral *rocha, int id, float peso, char *categoria, char *dataColeta, double latitude, double longitude)
+RochaMineral InicializaRocha(RochaMineral* rocha, int id, float peso, char* categoria, char* dataColeta, double latitude, double longitude)
 {
     setIdentificador(rocha, id);
     setPeso(rocha, peso);
     setCategoria(rocha, categoria);
     setDataColeta(rocha, dataColeta);
     setLocalizacao(rocha, latitude, longitude);
+
+    return *rocha;
 }
 
 char* DefCategoria(RochaMineral *rocha)
@@ -97,9 +99,9 @@ void setLocalizacao(RochaMineral *rocha, double latitude, double longitude)
     rocha->longitude = longitude;
 }
 
-int getIdentificador(RochaMineral *rocha) { return rocha->id; }
-float getPeso(RochaMineral *rocha) { return rocha->peso; }
-char* getCategoria(RochaMineral *rocha) { return rocha->categoria; }
-char* getDataColeta(RochaMineral *rocha) { return rocha->dataColeta; }
-double getLatitude(RochaMineral *rocha) { return rocha->latitude; }
-double getLongitude(RochaMineral *rocha) { return rocha->longitude; }
+int getIdentificador(RochaMineral* rocha) { return rocha->id; }
+float getPeso(RochaMineral* rocha) { return rocha->peso; }
+char* getCategoria(RochaMineral* rocha) { return rocha->categoria; }
+char* getDataColeta(RochaMineral* rocha) { return rocha->dataColeta; }
+double getLatitude(RochaMineral* rocha) { return rocha->latitude; }
+double getLongitude(RochaMineral* rocha) { return rocha->longitude; }

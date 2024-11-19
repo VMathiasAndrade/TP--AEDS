@@ -3,11 +3,11 @@
 #include <string.h>
 #include "Sonda.h"
 
-void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, char *EstaLigada)
-{
+void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, float capacidade, char *EstaLigada) {
     setIds(sonda, id);
     setLats(sonda, latitude);
     setLongs(sonda, longitude);
+    setCapacidade(sonda, capacidade);
     setEstaLigadas(sonda, EstaLigada);
     FLVazia(&sonda->cRocha);
 }
@@ -24,6 +24,18 @@ void MoveSonda(Sonda* sonda, double latitude, double longitude)
     setLats(sonda, latitude);
     setLongs(sonda, longitude);
 }
+float LPeso(Sonda* sonda)
+{
+    float pesoTotal = 0;
+    ApontadorRocha pAux = sonda->cRocha.pPrimeiro->pProx;
+
+    while (pAux != NULL)
+    {
+        pesoTotal += pAux->rocha.peso;
+        pAux = pAux->pProx;
+    }
+    return pesoTotal;
+}
 
 int getIds(Sonda* sonda) {
     return sonda->id;
@@ -33,6 +45,9 @@ double getLats(Sonda* sonda) {
 }
 double getLongs(Sonda* sonda) {
     return sonda->longitude;
+}
+float getCapacidade(Sonda* sonda){
+    return sonda->capacidade;
 }
 char* getEstaLigadas(Sonda* sonda) {
     return sonda->EstaLigada;
@@ -46,6 +61,9 @@ void setLats(Sonda* sonda, double latitude) {
 }
 void setLongs(Sonda* sonda, double longitude) {
     sonda->longitude = longitude;
+}
+void setCapacidade(Sonda* sonda, float capacidade){
+    sonda->capacidade = capacidade;
 }
 void setEstaLigadas(Sonda* sonda, char* EstaLigada) {
     strcpy(sonda->EstaLigada, EstaLigada);
