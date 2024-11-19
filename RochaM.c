@@ -93,6 +93,7 @@ char *DefCategoria(RochaMineral *rocha)
     {
         strcpy(rocha->categoria, "Aquacalis");
     }
+    return rocha->categoria;
 }
 
 void setIdentificador(RochaMineral *rocha, int id)

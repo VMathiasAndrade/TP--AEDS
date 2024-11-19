@@ -7,7 +7,7 @@ typedef struct
     int id;
     double latitude, longitude;
     char EstaLigada[3];
-    RCompartimento compartimento_sonda;
+    RCompartimento cRocha; //Compartimento Rocha
 } Sonda;
 
 void InicializaSonda(Sonda *sonda, int id, double latitude, double longitude, char *EstaLigada);

@@ -9,28 +9,22 @@ void InicializaMineral(Mineral *mineral, char *nome, char *cor, double dureza, d
     setCor(mineral, cor);
     setDureza(mineral, reativ);
     setReatividade(mineral, dureza);
-
-    return *mineral;
 }
 void RetornaMineral(Mineral *mineral, char *nome)
 {
-    int x = 1;
-    if (strcmp(nome, "Ferrolita"))
+    if (strcmp(nome, "Ferrolita") == 0)
     {
         strcpy(mineral->nome, "Ferrolita");
         strcpy(mineral->cor, "Acinzentado");
         mineral->dureza = 0.5;
         mineral->reativ = 0.7;
-        x = 0;
     }
-
     else if (strcmp(nome, "Solarium") == 0)
     {
         strcpy(mineral->nome, "Solarium");
         strcpy(mineral->cor, "Amarelo");
         mineral->dureza = 0.9;
         mineral->reativ = 0.2;
-        x = 0;
     }
     else if (strcmp(nome, "Aquavitae") == 0)
     {
@@ -38,7 +32,6 @@ void RetornaMineral(Mineral *mineral, char *nome)
         strcpy(mineral->cor, "Azulado");
         mineral->dureza = 0.5;
         mineral->reativ = 0.8;
-        x = 0;
     }
     else if (strcmp(nome, "Terranita") == 0)
     {
@@ -46,7 +39,6 @@ void RetornaMineral(Mineral *mineral, char *nome)
         strcpy(mineral->cor, "Marrom");
         mineral->dureza = 0.7;
         mineral->reativ = 0.6;
-        x = 0;
     }
     else if (strcmp(nome, "Calaris") == 0)
     {
@@ -54,11 +46,10 @@ void RetornaMineral(Mineral *mineral, char *nome)
         strcpy(mineral->cor, "Vermelho");
         mineral->dureza = 0.6;
         mineral->reativ = 0.5;
-        x = 0;
     }
     else
     {
-        printf("Pedra inválida, digite novamente:");
+        printf("Pedra invalida, digite novamente:");
     }
 }
 
