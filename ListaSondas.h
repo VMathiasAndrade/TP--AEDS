@@ -20,7 +20,7 @@ typedef struct
 void FLVaziaSonda(SLista* ListaS);
 int LInsereSonda(SLista* ListaS, Sonda *pSonda);
 int LRetiraSonda(SLista* ListaS, Sonda *pSonda);
-Sonda* DistElclidiana(SLista* ListaS, double lat_r, double long_r);
+Sonda* DistElclidiana(SLista* ListaS, double lat_r, double long_r, RochaMineral* rocha);
 void InsereRochaS(SLista* ListaS, RochaMineral* rocha);
 void ImprimeLSonda(SLista* ListaS);
 void MoveOrigem(SLista* ListaS);

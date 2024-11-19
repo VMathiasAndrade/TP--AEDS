@@ -68,24 +68,22 @@ int main() {
             LInsereSonda(&ListaSonda, &sondai);
         }
 
-        ImprimeLSonda(&ListaSonda);
-
         int N_op;
-        printf("Digite o numero de operacoes: \n");
+        printf("Digite o numero de operacoes: ");
         scanf("%d", &N_op);
         for (int i = 0; i < N_op; i++) {
             char operacao;
             printf("Digite a operacao: ");
-            scanf("%c", &operacao);
+            scanf(" %c", &operacao);
             switch (operacao) {
-            case 'R':{
+                case 'R':{
                     double lat_r, long_r;
                     float p_r;
                     char cat_r[20];
                     char minerais_str[100];
 
-                    printf("Digite a latitude, longitude, peso e ate 3 minerais (SEPARE POR ESPACO):\n");
-                    scanf("%lf %lf %f", lat_r, long_r, p_r);
+                    printf("\nDigite a latitude, longitude, peso e ate 3 minerais (SEPARE POR ESPACO):\n");
+                    scanf("%lf %lf %f", &lat_r, &long_r, &p_r);
                     getchar();
                     fgets(minerais_str, sizeof(minerais_str), stdin);
                     minerais_str[strcspn(minerais_str, "\n")] = '\0';
@@ -105,6 +103,7 @@ int main() {
 
                     RochaMineral nRocha = InicializaRocha(&rocha, ++cont, p_r, DefCategoria(&rocha), "10/10/2024", lat_r, long_r);
 
+                    InsereRochaS(&ListaSonda, &nRocha);
 
                     break;
                 }

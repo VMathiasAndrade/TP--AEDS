@@ -60,75 +60,87 @@ void ImprimeLSonda(SLista* sLista) {
     {
         printf("ID: %d\n", pAux->sonda.id);
         printf("Rocha(s): %s\n", pAux->sonda.cRocha.pPrimeiro->rocha.categoria);
-        printf("Latitude e longitude: %f %f\n", pAux->sonda.latitude, pAux->sonda.longitude);
+        printf("Latitude e longitude: %.6f %.6f\n", pAux->sonda.latitude, pAux->sonda.longitude);
+        printf("Capacidade: %.2f\n", pAux->sonda.capacidade);
         printf("Status da sonda: %s\n\n", pAux->sonda.EstaLigada);
 
         pAux = pAux->pProx;
     }
 }
 
-Sonda* DistElclidiana(SLista* ListaS, double lat_r, double long_r) {
+Sonda* DistElclidiana(SLista* ListaS, double lat_r, double long_r, RochaMineral* rocha) {
     SCelula* pAux = ListaS->pPrimeiro->pProx;
-    Sonda* pSonda;
-    double lat_i, long_i;
-    float menorDist = 1000000, distSonda = 0;
+    Sonda* primeiraSonda = NULL;
+    Sonda* segundaSonda = NULL;
+    double menorDist = 1000000, segundaMenorDist = 1000000;
+    double lat_i, long_i, distSonda;
 
     while (pAux != NULL) {
         lat_i = pAux->sonda.latitude;
         long_i = pAux->sonda.longitude;
         distSonda = sqrt(pow(lat_r - lat_i, 2) + pow(long_r - long_i, 2));
-        if (menorDist >= distSonda) {
+
+        if (distSonda < menorDist) {
+            segundaMenorDist = menorDist;
+            segundaSonda = primeiraSonda;
             menorDist = distSonda;
-            pSonda = &pAux->sonda;
+            primeiraSonda = &pAux->sonda;
+        } else if (distSonda < segundaMenorDist) {
+            segundaMenorDist = distSonda;
+            segundaSonda = &pAux->sonda;
         }
         pAux = pAux->pProx;
     }
-    return pSonda;
+
+    if (primeiraSonda != NULL && LPeso(primeiraSonda) + rocha->peso <= primeiraSonda->capacidade) {
+        return primeiraSonda;
+    } else if (segundaSonda != NULL && LPeso(segundaSonda) + rocha->peso <= segundaSonda->capacidade) {
+        return segundaSonda;
+    } else {
+        return primeiraSonda; // Retorna a primeira sonda para o caso 2 (troca de rochas)
+    }
 }
 
 void InsereRochaS(SLista* ListaS, RochaMineral* rocha){
-    Sonda *sondaTemp = NULL;
-    double lat_r = rocha->latitude;
-    double long_r = rocha->longitude;
-    
-    ApontadorSonda pAux = ListaS->pPrimeiro->pProx;
-    Sonda *sonda = NULL;
+    Sonda *sondaTemp = DistElclidiana(ListaS, rocha->latitude, rocha->longitude, rocha);
 
-    while (pAux != NULL) {
-        sonda = &pAux->sonda;
-        float vCapacidade = LPeso(sonda) - rocha->peso;
-
-        if (vCapacidade >= rocha->peso) {
-            sondaTemp = DistElclidiana(ListaS, lat_r, long_r);
-        }
-        pAux = pAux->pProx;
-    }
     if (sondaTemp == NULL) {
         printf("Nao ha sonda perto!\n");
-    }
-    sondaTemp->latitude = rocha->longitude;
-    sondaTemp->longitude = rocha->longitude;
-
-    if (sondaTemp->cRocha.pPrimeiro == NULL) {
-        sondaTemp->cRocha.pPrimeiro = (RCelula*)malloc(sizeof(RCelula));
-        sondaTemp->cRocha.pUltimo = sondaTemp->cRocha.pPrimeiro;
+        return; // Sai da função se não houver sonda próxima
     }
 
-    RCelula *nRocha = (RCelula*)malloc(sizeof(RCelula));
-    nRocha->rocha = *rocha;
-    nRocha->pProx = NULL;
+    if (LPeso(sondaTemp) + rocha->peso > sondaTemp->capacidade) {
+        // Caso 1: Capacidade insuficiente, tenta trocar por rocha mais pesada
+        ApontadorRocha pAux = sondaTemp->cRocha.pPrimeiro->pProx;
+        ApontadorRocha rochaMaisPesada = NULL;
+        float maiorPeso = 0;
 
-    if (sondaTemp->cRocha.pPrimeiro == NULL) {
-        sondaTemp->cRocha.pPrimeiro == nRocha;
-        sondaTemp->cRocha.pUltimo == nRocha;
+        while (pAux != NULL) {
+            if (strcmp(pAux->rocha.categoria, rocha->categoria) == 0 && pAux->rocha.peso > maiorPeso) {
+                maiorPeso = pAux->rocha.peso;
+                rochaMaisPesada = pAux;
+            }
+            pAux = pAux->pProx;
+        }
+
+        if (rochaMaisPesada != NULL && rochaMaisPesada->rocha.peso > rocha->peso) {
+            rochaMaisPesada->rocha = *rocha; // Substitui a rocha mais pesada
+            printf("Rocha coletada pela sonda %d (troca por rocha mais pesada).\n", sondaTemp->id);
+             return; // Sai da função após a troca bem-sucedida
+        } else {
+             printf("Impossivel coletar ou trocar rochas. Rocha descartada.\n");
+             return; // Sai da função se a troca não for possível
+        }
     } else {
-        sondaTemp->cRocha.pUltimo->pProx = nRocha;
-        sondaTemp->cRocha.pUltimo = nRocha;
+        // Caso 2: Capacidade suficiente, insere a rocha normalmente
+        sondaTemp->latitude = rocha->latitude;
+        sondaTemp->longitude = rocha->longitude;
+         if (LInsere(&sondaTemp->cRocha, rocha)) {
+            printf("\nRocha coletada pela sonda: %d\n", sondaTemp->id);
+         } else {
+            printf("\nErro ao inserir rocha na sonda %d.\n", sondaTemp->id);
+        }
     }
-    sonda->capacidade -= rocha->peso;
-
-    printf("-------Sonda Coletada-------");
-    printf("Rocha coletada pela sonda: %d\n", sondaTemp->id);
 }
 
 void MoveOrigem(SLista* ListaS) {
