@@ -12,12 +12,12 @@ typedef struct
 } RochaMineral;
 
 void InicializaRocha(RochaMineral *rocha, int id, float peso, char *categoria, char *dataColeta, double latitude, double longitude);
-char *DefCategoria(RochaMineral *rocha);
+char* DefCategoria(RochaMineral *rocha);
 
 int getIdentificador(RochaMineral *rocha);
 float getPeso(RochaMineral *rocha);
-char *getCategoria(RochaMineral *rocha);
-char *getDataColeta(RochaMineral *rocha);
+char* getCategoria(RochaMineral *rocha);
+char* getDataColeta(RochaMineral *rocha);
 double getLatitude(RochaMineral *rocha);
 double getLongitude(RochaMineral *rocha);
 

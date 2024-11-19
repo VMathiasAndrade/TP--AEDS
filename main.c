@@ -133,12 +133,15 @@ int main()
 
                 LInsereMine(&rocha1.LMinerais, mineral1);
                 LInsereMine(&rocha1.LMinerais, mineral2);
+                // Ferrolita e Terranita
 
                 LInsereMine(&rocha2.LMinerais, mineral1);
                 LInsereMine(&rocha2.LMinerais, mineral4);
+                // Ferrolita e Solarium
 
                 LInsereMine(&rocha3.LMinerais, mineral3);
                 LInsereMine(&rocha3.LMinerais, mineral2);
+                // Calaris e Terranita
 
                 InicializaRocha(&rocha1, 1, 18, DefCategoria(&rocha1), "12/12/2024", 55.489421, -150.457196);
                 InicializaRocha(&rocha2, 2, 21, DefCategoria(&rocha2), "04/12/2024", 16.718537, -148.127484);
