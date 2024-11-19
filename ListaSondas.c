@@ -54,11 +54,9 @@ int LRetiraSonda(SLista *sLista, Sonda *pSonda)
     }
     return 0;
 }
-void ImprimeLSonda(SLista *sLista)
-{
+void ImprimeLSonda(SLista *sLista) {
     int cont = 0;
-    ApontadorSonda pAux;
-    pAux = sLista->pPrimeiro;
+    ApontadorSonda pAux = pAux = sLista->pPrimeiro->pProx;
     while (pAux != NULL)
     {
         printf("ID: %d\n", pAux->sonda.id);
