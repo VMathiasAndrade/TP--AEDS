@@ -3,7 +3,8 @@
 #include <string.h>
 #include "Sonda.h"
 
-void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, float capacidade, char *EstaLigada) {
+void InicializaSonda(Sonda *sonda, int id, double latitude, double longitude, float capacidade, char *EstaLigada)
+{
     setIds(sonda, id);
     setLats(sonda, latitude);
     setLongs(sonda, longitude);
@@ -11,20 +12,20 @@ void InicializaSonda(Sonda* sonda, int id, double latitude, double longitude, fl
     setEstaLigadas(sonda, EstaLigada);
     FLVazia(&sonda->cRocha);
 }
-void LigaSonda(Sonda* sonda)
+void LigaSonda(Sonda *sonda)
 {
     strcpy((*sonda).EstaLigada, "Sim");
 }
-void DesligaSonda(Sonda* sonda)
+void DesligaSonda(Sonda *sonda)
 {
     strcpy((*sonda).EstaLigada, "Nao");
 }
-void MoveSonda(Sonda* sonda, double latitude, double longitude)
+void MoveSonda(Sonda *sonda, double latitude, double longitude)
 {
     setLats(sonda, latitude);
     setLongs(sonda, longitude);
 }
-float LPeso(Sonda* sonda)
+float LPeso(Sonda *sonda)
 {
     float pesoTotal = 0;
     ApontadorRocha pAux = sonda->cRocha.pPrimeiro->pProx;
@@ -37,34 +38,44 @@ float LPeso(Sonda* sonda)
     return pesoTotal;
 }
 
-int getIds(Sonda* sonda) {
+int getIds(Sonda *sonda)
+{
     return sonda->id;
 }
-double getLats(Sonda* sonda) {
+double getLats(Sonda *sonda)
+{
     return sonda->latitude;
 }
-double getLongs(Sonda* sonda) {
+double getLongs(Sonda *sonda)
+{
     return sonda->longitude;
 }
-float getCapacidade(Sonda* sonda){
+float getCapacidade(Sonda *sonda)
+{
     return sonda->capacidade;
 }
-char* getEstaLigadas(Sonda* sonda) {
+char *getEstaLigadas(Sonda *sonda)
+{
     return sonda->EstaLigada;
 }
 
-void setIds(Sonda* sonda, int id) {
+void setIds(Sonda *sonda, int id)
+{
     sonda->id = id;
 }
-void setLats(Sonda* sonda, double latitude) {
+void setLats(Sonda *sonda, double latitude)
+{
     sonda->latitude = latitude;
 }
-void setLongs(Sonda* sonda, double longitude) {
+void setLongs(Sonda *sonda, double longitude)
+{
     sonda->longitude = longitude;
 }
-void setCapacidade(Sonda* sonda, float capacidade){
+void setCapacidade(Sonda *sonda, float capacidade)
+{
     sonda->capacidade = capacidade;
 }
-void setEstaLigadas(Sonda* sonda, char* EstaLigada) {
+void setEstaLigadas(Sonda *sonda, char *EstaLigada)
+{
     strcpy(sonda->EstaLigada, EstaLigada);
 }

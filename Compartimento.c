@@ -39,7 +39,7 @@ int LInsere(RCompartimento *rLista, RochaMineral *pRocha)
 void LImprime(RCompartimento *rLista)
 {
     int cont = 1;
-    ApontadorRocha pAux;
+    ApontadorRocha pAux= NULL;
     pAux = rLista->pPrimeiro->pProx;
     while (pAux != NULL)
     {
