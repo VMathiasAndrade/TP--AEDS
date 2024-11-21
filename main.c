@@ -134,7 +134,9 @@ int main()
             case 'E':
             {
                 RCompartimento ListaNova;
+                printf("comeco case e");
                 ListaTemp(&ListaSonda, &ListaNova);
+                printf("depois de listatemp");
                 RedistribuiRocha(&ListaSonda, &ListaNova);
                 break;
             }
