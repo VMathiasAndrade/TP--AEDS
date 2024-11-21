@@ -34,22 +34,21 @@ void OperacaoI(SLista *ListaSonda) {
 
 int main()
 {
-    int Escolha = 0;
-    while (Escolha != 1 && Escolha != 2)
-    {
+    int N_Sondas, Escolha = 0;
+    double lat_i, long_i;
+    float c_i, v_i, nc_i;
+    char linha[255];
+    SLista ListaSonda;
+    RochaMineral rocha;
+    Mineral minel;
+    Sonda sondai;
+    
+    while (Escolha != 1 && Escolha != 2) {
         printf("Arquivo de entrada (1 - Terminal, 2 - Arquivo): \n");
         scanf("%d", &Escolha);
     }
 
-    if (Escolha == 1)
-    {
-        int N_Sondas;
-        double lat_i, long_i;
-        float c_i, v_i, nc_i;
-        SLista ListaSonda;
-        RochaMineral rocha;
-        Mineral minel;
-        Sonda sondai;
+    if (Escolha == 1) {
 
         FLVaziaSonda(&ListaSonda);
 
@@ -75,7 +74,6 @@ int main()
                 case 'R': {
                     double lat_r, long_r;
                     float p_r;
-                    char cat_r[20];
                     char minerais_str[100];
 
                     printf("\nDigite a latitude, longitude, peso e ate 3 minerais (SEPARE POR ESPACO):\n");
@@ -98,9 +96,9 @@ int main()
 
                     int cont = 0;
 
-                    RochaMineral nRocha = InicializaRocha(&rocha, ++cont, p_r, DefCategoria(&rocha), "10/10/2024", lat_r, long_r);
+                    InicializaRocha(&rocha, ++cont, p_r, DefCategoria(&rocha), "", lat_r, long_r);
 
-                    InsereRochaS(&ListaSonda, &nRocha);
+                    InsereRochaS(&ListaSonda, &rocha);
 
                     break;
                 }
@@ -120,6 +118,92 @@ int main()
             }
         }
     }
+    else if (Escolha == 2) {
+
+        printf("Nome do arquivo de entrada: ");
+
+        char nomearq[33];
+        int N_Sondas;
+
+        FILE *arq;
+        scanf("%32s", nomearq);
+        arq = fopen(nomearq, "r");
+
+        fscanf(arq, "%d", &N_Sondas);
+
+        FLVaziaSonda(&ListaSonda);
+
+        for (int i = 0; i < N_Sondas; i++) {
+            fscanf(arq, "%lf %lf %f %f %f", &lat_i, &long_i, &c_i, &v_i, &nc_i);
+            InicializaSonda(&sondai, (i+1), lat_i, long_i, c_i, "Sim");
+            LInsereSonda(&ListaSonda, &sondai);
+        }
+        fflush(stdout);
+        
+        int N_op;
+        fscanf(arq, "%d", &N_op);
+        
+        for (int i = 0; i < N_op; i++) {
+            char opcao;
+            fflush(stdout);
+            fscanf(arq, " %c", &opcao);
+            
+            switch (opcao) {
+                case 'R':{
+                    int c;
+                    while ((c = fgetc(arq)) != '\n' && c != EOF);
+
+                    FLVaziaMine(&rocha.LMinerais);
+                    double lat_r, long_r;
+                    float p_r;
+                    
+                    fgets(linha, sizeof(linha), arq);
+                    linha[strcspn(linha, "\n")] = '\0';
+
+                    char *buffer = strtok(linha, " ");
+
+                    lat_r = atof(buffer);
+                    buffer = strtok(NULL, " ");
+                    long_r = atof(buffer);
+                    buffer = strtok(NULL, " ");
+                    p_r = atof(buffer);
+                    buffer = strtok(NULL, " ");
+
+                    while (buffer != NULL) {
+                        Mineral mineral;
+                        buffer[strcspn(buffer, "\n")] = '\0';
+                        RetornaMineral(&mineral, buffer);
+                        LInsereMine(&rocha.LMinerais, mineral);
+                        buffer = strtok(NULL, " ");
+                    }
+                    
+                    int cont = 0;
+
+                    InicializaRocha(&rocha, ++cont, p_r, DefCategoria(&rocha), "", lat_r, long_r);
+
+                    InsereRochaS(&ListaSonda, &rocha);
+
+                    break;
+                }
+                case 'I':{
+                    
+                    OperacaoI(&ListaSonda);
+                    
+                    break;
+                }
+                case 'E': {
+                    
+                    OperacaoE(&ListaSonda);
+
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        fclose(arq);
+    }
+    
     printf("-----------------------------------------------------------------------------\n");
     printf("Trabalho feito por Bruno Vicentini, Pedro Paulo Paz e Vitor Mathias\n");
     printf("-----------------------------------------------------------------------------");

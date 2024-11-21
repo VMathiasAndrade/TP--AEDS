@@ -182,19 +182,19 @@ void MoveOrigem(SLista *ListaS) {
 }
 
 RochaMineral *copiaRocha(RochaMineral *rocha) {
-    RochaMineral *copia = (RochaMineral *)malloc(sizeof(RochaMineral));
-    if (copia == NULL) {
+    RochaMineral *copiaRocha = (RochaMineral *)malloc(sizeof(RochaMineral));
+    if (copiaRocha == NULL) {
         perror("Erro ao alocar memória para cópia da rocha");
         return NULL;
     }
-    *copia = *rocha; // Copia os membros da estrutura
+    *copiaRocha = *rocha; // Copia os membros da estrutura
     // Cria uma cópia da lista de minerais (cópia profunda)
-    FLVaziaMine(&copia->LMinerais);
+    FLVaziaMine(&copiaRocha->LMinerais);
     for (int i = rocha->LMinerais.first; i < rocha->LMinerais.last; i++) {
-        LInsereMine(&copia->LMinerais, rocha->LMinerais.ListaM[i]);
+        LInsereMine(&copiaRocha->LMinerais, rocha->LMinerais.ListaM[i]);
     }
 
-    return copia;
+    return copiaRocha;
 }
 
 
