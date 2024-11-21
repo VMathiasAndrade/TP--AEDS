@@ -211,8 +211,8 @@ void ListaTemp(SLista *ListaS, RCompartimento *NovaLista)
 
 int ComparaPeso(const void *a, const void *b)
 {
-    RochaMineral *rocha1 = (const RochaMineral *)a;
-    RochaMineral *rocha2 = (const RochaMineral *)b;
+    RochaMineral *rocha1 = ( RochaMineral *)a;
+    RochaMineral *rocha2 = ( RochaMineral *)b;
     if (rocha1->peso < rocha2->peso)
     {
         return -1;
@@ -263,7 +263,7 @@ void OrdenarListaTemp(RCompartimento *NovaLista)
         pAuxNL->rocha = listatemporaria[k];
         pAuxNL->pProx = NULL;
 
-        if (NovaLista->pPrimeiro = NULL)
+        if (NovaLista->pPrimeiro == NULL)
         {
             NovaLista->pPrimeiro = pAuxNL;
             NovaLista->pUltimo = pAuxNL;
@@ -292,7 +292,7 @@ void RedistribuiRocha(SLista *ListaS, RCompartimento *NovaLista) {
     }
 
     
-    float *peso_das_sondas = (float *)malloc(sizeof(float));
+    float *peso_das_sondas = (float *)malloc(numSondas*sizeof(float));
     if (peso_das_sondas == NULL) {
         return;
     }

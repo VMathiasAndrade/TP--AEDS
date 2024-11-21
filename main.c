@@ -136,6 +136,7 @@ int main()
                 RCompartimento ListaNova;
                 ListaTemp(&ListaSonda, &ListaNova);
                 RedistribuiRocha(&ListaSonda, &ListaNova);
+                break;
             }
             }
         }
