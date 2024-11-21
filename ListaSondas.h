@@ -24,10 +24,9 @@ Sonda *DistEuclidiana(SLista *ListaS, double lat_r, double long_r, RochaMineral 
 void InsereRochaS(SLista *ListaS, RochaMineral *rocha);
 void ImprimeLSonda(SLista *ListaS);
 void MoveOrigem(SLista *ListaS);
-void OperacaoI(SLista *ListaS);
-void ListaTemp(SLista *ListaS, RCompartimento *NovaLista);
-void RemoveRocha(RCompartimento *Lista, ApontadorRocha pRemover);
-void RedistribuiRocha(SLista *ListaS, RCompartimento *NovaLista);
-void OrdenarListaTemp(RCompartimento *NovaLista);
-int ComparaPeso(const void *a, const void *b);
+RochaMineral *copiaRocha(RochaMineral *rocha);
+RochaMineral *extraiRochas(SLista *ListaS, int *numRochas);
+int comparaRochas(const void *a, const void *b);
+void distribuirRochas(SLista *ListaS, RochaMineral *rochas, int NumRochas);
+void OperacaoE(SLista *ListaS);
 #endif

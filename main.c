@@ -4,8 +4,7 @@
 #include "ListaSondas.h"
 #include <math.h>
 
-void OperacaoI(SLista *ListaSonda)
-{
+void OperacaoI(SLista *ListaSonda) {
     ApontadorSonda pAux = ListaSonda->pPrimeiro->pProx;
 
     while (pAux != NULL)
@@ -31,23 +30,6 @@ void OperacaoI(SLista *ListaSonda)
         }
         pAux = pAux->pProx;
     }
-}
-
-void OperacaoE(SLista *sLista, int numSondas)
-{
-    // Passo 1: Mover todas as sondas para (0,0) Ok
-    ApontadorSonda pAtual = sLista->pPrimeiro;
-    while (pAtual != NULL)
-    {
-        pAtual->sonda.latitude = 0.0;
-        pAtual->sonda.longitude = 0.0;
-        pAtual = pAtual->pProx;
-    }
-    // Vai ser melhor criar uma função de redistribuir as rochas
-    // Talvez seja melhor jogar todas as rochas em uma lista, verificar qual é o meio dessa lista e colocar as rochas da primeira metade nas sondas (sonda 1 fica com a mais pesada, a 2 com a segunda mais pesada, etc)
-    // a partir da segunda metade, a sonda que ficou com a rocha mais leve da primeira metade vai receber a mais pesada da segunda metade, e por assim vai (sonda 3 fica com a terceira mais leve, sonda 2 com a segunda mais leve e a sonda 1 com a mais leve de todas)
-
-    printf("Operacao E concluida. Todas as sondas movidas para (0,0) e pesos redistribuidos.\n");
 }
 
 int main()
@@ -89,57 +71,52 @@ int main()
             char operacao;
             printf("Digite a operacao: ");
             scanf(" %c", &operacao);
-            switch (operacao)
-            {
-            case 'R':
-            {
-                double lat_r, long_r;
-                float p_r;
-                char cat_r[20];
-                char minerais_str[100];
+            switch (operacao) {
+                case 'R': {
+                    double lat_r, long_r;
+                    float p_r;
+                    char cat_r[20];
+                    char minerais_str[100];
 
-                printf("\nDigite a latitude, longitude, peso e ate 3 minerais (SEPARE POR ESPACO):\n");
-                scanf("%lf %lf %f", &lat_r, &long_r, &p_r);
-                getchar();
-                fgets(minerais_str, sizeof(minerais_str), stdin);
-                minerais_str[strcspn(minerais_str, "\n")] = '\0';
+                    printf("\nDigite a latitude, longitude, peso e ate 3 minerais (SEPARE POR ESPACO):\n");
+                    scanf("%lf %lf %f", &lat_r, &long_r, &p_r);
+                    getchar();
+                    fgets(minerais_str, sizeof(minerais_str), stdin);
+                    minerais_str[strcspn(minerais_str, "\n")] = '\0';
 
-                const char delim[2] = " ";
-                char *buffer = strtok(minerais_str, delim);
+                    const char delim[2] = " ";
+                    char *buffer = strtok(minerais_str, delim);
 
-                FLVaziaMine(&rocha.LMinerais);
+                    FLVaziaMine(&rocha.LMinerais);
 
-                while (buffer != NULL)
-                {
-                    RetornaMineral(&minel, buffer);
-                    LInsereMine(&rocha.LMinerais, minel);
-                    buffer = strtok(NULL, delim);
+                    while (buffer != NULL)
+                    {
+                        RetornaMineral(&minel, buffer);
+                        LInsereMine(&rocha.LMinerais, minel);
+                        buffer = strtok(NULL, delim);
+                    }
+
+                    int cont = 0;
+
+                    RochaMineral nRocha = InicializaRocha(&rocha, ++cont, p_r, DefCategoria(&rocha), "10/10/2024", lat_r, long_r);
+
+                    InsereRochaS(&ListaSonda, &nRocha);
+
+                    break;
                 }
+                case 'I': {
 
-                int cont = 0;
+                    OperacaoI(&ListaSonda);
 
-                RochaMineral nRocha = InicializaRocha(&rocha, ++cont, p_r, DefCategoria(&rocha), "10/10/2024", lat_r, long_r);
+                    break;
+                }
+                case 'E': {
+                    
+                    OperacaoE(&ListaSonda);
 
-                InsereRochaS(&ListaSonda, &nRocha);
-
-                break;
-            }
-            case 'I':
-            {
-
-                OperacaoI(&ListaSonda);
-
-                break;
-            }
-            case 'E':
-            {
-                RCompartimento ListaNova;
-                printf("comeco case e");
-                ListaTemp(&ListaSonda, &ListaNova);
-                printf("depois de listatemp");
-                RedistribuiRocha(&ListaSonda, &ListaNova);
-                break;
-            }
+                    break;
+                    
+                }
             }
         }
     }

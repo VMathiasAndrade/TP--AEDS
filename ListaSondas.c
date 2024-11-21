@@ -73,8 +73,7 @@ void ImprimeLSonda(SLista *sLista)
     }
 }
 
-Sonda *DistEuclidiana(SLista *ListaS, double lat_r, double long_r, RochaMineral *rocha)
-{
+Sonda *DistEuclidiana(SLista *ListaS, double lat_r, double long_r, RochaMineral *rocha) {
     SCelula *pAux = ListaS->pPrimeiro->pProx;
     Sonda *primeiraSonda = NULL;
     Sonda *segundaSonda = NULL;
@@ -116,8 +115,7 @@ Sonda *DistEuclidiana(SLista *ListaS, double lat_r, double long_r, RochaMineral 
     }
 }
 
-void InsereRochaS(SLista *ListaS, RochaMineral *rocha)
-{
+void InsereRochaS(SLista *ListaS, RochaMineral *rocha) {
     Sonda *sondaTemp = DistEuclidiana(ListaS, rocha->latitude, rocha->longitude, rocha);
 
     if (sondaTemp == NULL)
@@ -171,8 +169,7 @@ void InsereRochaS(SLista *ListaS, RochaMineral *rocha)
     }
 }
 
-void MoveOrigem(SLista *ListaS)
-{
+void MoveOrigem(SLista *ListaS) {
     ApontadorSonda pAux = NULL;
     pAux = ListaS->pPrimeiro;
     while (pAux != NULL)
@@ -184,210 +181,172 @@ void MoveOrigem(SLista *ListaS)
     }
 }
 
-void ListaTemp(SLista *ListaS, RCompartimento *NovaLista)
-{
-    printf("ENTROU NO LISTA TEMP");
-    ApontadorSonda pAux = NULL;
-    ApontadorRocha pAuxiliar = NULL;
-
-    FLVazia(NovaLista);
-
-    // percorre cada sonda
-    pAux = ListaS->pPrimeiro->pProx;
-
-    while (pAux != NULL)
-    {
-        pAuxiliar = pAux->sonda.cRocha.pPrimeiro;
-        while (pAuxiliar != NULL)
-        {
-            ApontadorRocha temp = pAuxiliar;
-            pAuxiliar = pAuxiliar->pProx;
-            if (!LInsere(NovaLista, &temp->rocha)) {
-                printf("Erro ao inserir rocha na lista temporária.\n");
-                return;
-            }
-            RemoveRocha(&pAux->sonda.cRocha, temp);
-        }
-        pAux = pAux->pProx; // esse pAux vai passar para a proxima sonda
+RochaMineral *copiaRocha(RochaMineral *rocha) {
+    RochaMineral *copia = (RochaMineral *)malloc(sizeof(RochaMineral));
+    if (copia == NULL) {
+        perror("Erro ao alocar memória para cópia da rocha");
+        return NULL;
     }
-    LImprime(NovaLista);
-    printf("ESSE PRINT TA NO FINAL DE LISTATEMP");
+    *copia = *rocha; // Copia os membros da estrutura
+    // Cria uma cópia da lista de minerais (cópia profunda)
+    FLVaziaMine(&copia->LMinerais);
+    for (int i = rocha->LMinerais.first; i < rocha->LMinerais.last; i++) {
+        LInsereMine(&copia->LMinerais, rocha->LMinerais.ListaM[i]);
+    }
+
+    return copia;
 }
 
-int ComparaPeso(const void *a, const void *b)
-{
-    printf("CMC COMPARA PESO");
+
+// 2. Função para extrair todas as rochas das sondas e colocá-las em um array
+RochaMineral *extraiRochas(SLista *ListaS, int *numRochas) {
+    *numRochas = 0;
+    ApontadorSonda pAuxSonda = ListaS->pPrimeiro->pProx;
+
+    // Conta o número total de rochas
+    while (pAuxSonda != NULL) {
+        ApontadorRocha pAuxRocha = pAuxSonda->sonda.cRocha.pPrimeiro->pProx;
+        while (pAuxRocha != NULL) {
+            (*numRochas)++;
+            pAuxRocha = pAuxRocha->pProx;
+        }
+        pAuxSonda = pAuxSonda->pProx;
+    }
+
+    if (*numRochas == 0) {
+        return NULL; // Nenhuma rocha para extrair
+    }
+
+
+    RochaMineral *rochas = (RochaMineral *)malloc(*numRochas * sizeof(RochaMineral));
+    if (rochas == NULL) {
+        perror("Erro ao alocar memória para rochas");
+        return NULL;
+    }
+
+    int indiceRocha = 0;
+    pAuxSonda = ListaS->pPrimeiro->pProx;
+    while (pAuxSonda != NULL) {
+        ApontadorRocha pAuxRocha = pAuxSonda->sonda.cRocha.pPrimeiro->pProx;
+        while (pAuxRocha != NULL) {
+
+            rochas[indiceRocha] = *copiaRocha(&pAuxRocha->rocha); //copia a rocha para o array
+
+            ApontadorRocha temp = pAuxRocha;
+            pAuxRocha = pAuxRocha->pProx;
+            free(temp);
+            indiceRocha++;
+
+        }
+
+        FLVazia(&pAuxSonda->sonda.cRocha); //limpa a lista rocha
+
+        pAuxSonda = pAuxSonda->pProx;
+    }
+
+    return rochas;
+
+}
+
+// 3. Função de comparação para qsort (ordena por peso decrescente)
+int comparaRochas(const void *a, const void *b) {
     RochaMineral *rocha1 = (RochaMineral *)a;
     RochaMineral *rocha2 = (RochaMineral *)b;
-    if (rocha1->peso < rocha2->peso)
-    {
-        return -1;
-    }
-    else if (rocha1->peso > rocha2->peso)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-    printf("FINAL COMPARA PESO");
-}
-void OrdenarListaTemp(RCompartimento *NovaLista)
-{
-    printf("CMC ORDENARLISTA");
-    int cont = 0;
-    ApontadorRocha pAux = NovaLista->pPrimeiro;
-    while (pAux != NULL)
-    {
-        cont += 1;
-        pAux = pAux->pProx;
-    }
-
-    RochaMineral *listatemporaria = (RochaMineral *)malloc(cont * sizeof(RochaMineral));
-
-    pAux = NovaLista->pPrimeiro;
-    for (int i = 0; i < cont; i++)
-    {
-        listatemporaria[i] = pAux->rocha;
-        pAux = pAux->pProx;
-    }
-    const void *x, *y;
-    int resposta_ComparaPeso = ComparaPeso(x, y);
-
-    qsort(listatemporaria, cont, sizeof(RochaMineral), ComparaPeso);
-    NovaLista->pPrimeiro = NULL;
-    NovaLista->pUltimo = NULL;
-    for (int k = 0; k < cont; k++)
-    {
-
-        ApontadorRocha pAuxNL = (ApontadorRocha)malloc(sizeof(RCelula));
-        if (pAuxNL == NULL)
-        {
-            free(listatemporaria);
-            return;
-        }
-
-        pAuxNL->rocha = listatemporaria[k];
-        pAuxNL->pProx = NULL;
-
-        if (NovaLista->pPrimeiro == NULL)
-        {
-            NovaLista->pPrimeiro = pAuxNL;
-            NovaLista->pUltimo = pAuxNL;
-        }
-
-        else
-        {
-            NovaLista->pUltimo->pProx = pAuxNL;
-            NovaLista->pUltimo = pAuxNL;
-        }
-    }
-    free(listatemporaria);
-    printf("FIM ORDENARLISTA");
+    return (rocha2->peso > rocha1->peso) - (rocha2->peso < rocha1->peso); // Ordena decrescente
 }
 
-void RedistribuiRocha(SLista *ListaS, RCompartimento *NovaLista)
-{
-    printf("CMC REDISTRIBUIR");
-    if (NovaLista->pPrimeiro == NULL)
-    {
-        return;
+// 4. Função para distribuir as rochas entre as sondas
+void distribuirRochas(SLista *ListaS, RochaMineral *rochas, int numRochas) {
+    if (rochas == NULL || numRochas == 0) {
+        return; // Nada para distribuir
     }
+
+    qsort(rochas, numRochas, sizeof(RochaMineral), comparaRochas); // Ordena as rochas
 
     int numSondas = 0;
     ApontadorSonda pAux = ListaS->pPrimeiro->pProx;
-    while (pAux != NULL)
-    {
+    while (pAux != NULL) {
         numSondas++;
         pAux = pAux->pProx;
     }
 
-    float *peso_das_sondas = (float *)malloc(numSondas * sizeof(float));
-    if (peso_das_sondas == NULL)
-    {
+    float *pesosSondas = (float *)calloc(numSondas, sizeof(float)); // Inicializa com zero
+    if (pesosSondas == NULL) {
+        perror("Erro ao alocar memória para pesos das sondas");
         return;
     }
-    ApontadorRocha pAuxRocha = NovaLista->pPrimeiro;
-    while (pAuxRocha != NULL)
-    {
-        int sondaEscolhida = 0;
-        float menorPeso = peso_das_sondas[0];
-        pAux = ListaS->pPrimeiro->pProx;
-        for (int i = 0; i < numSondas; i++)
-        {
-            if (peso_das_sondas[i] < menorPeso)
-            {
-                menorPeso = peso_das_sondas[i];
-                sondaEscolhida = i;
+
+    for (int i = 0; i < numRochas; i++) {
+        int sondaEscolhida = -1;
+
+        // Tenta inserir a rocha em cada sonda, da menos para a mais pesada
+        for (int j = 0; j < numSondas; j++) {
+
+            // Encontra a próxima sonda com menor peso (considerando capacidade)
+            int indiceMenorPeso = -1;
+            float menorPeso = -1;
+            pAux = ListaS->pPrimeiro->pProx;
+            for (int k = 0; k < numSondas; k++) {
+
+                if ((indiceMenorPeso == -1 || pesosSondas[k] < menorPeso) && pAux->sonda.capacidade >= pesosSondas[k] + rochas[i].peso) {
+
+                    indiceMenorPeso = k;
+                    menorPeso = pesosSondas[k];
+
+                }
+                pAux = pAux->pProx;
+
+
             }
-            pAux = pAux->pProx;
+
+            if (indiceMenorPeso != -1) {
+
+                sondaEscolhida = indiceMenorPeso;
+                pAux = ListaS->pPrimeiro->pProx;
+                for (int k = 0; k < sondaEscolhida; k++) {
+                    pAux = pAux->pProx;
+                }
+
+
+                if (!LInsere(&pAux->sonda.cRocha, &rochas[i])) {
+                    printf("Erro ao inserir rocha na lista\n");
+                    // Trate o erro de inserção conforme necessário
+                }
+                pesosSondas[sondaEscolhida] += rochas[i].peso;
+
+
+                break; // Sai do loop interno após inserir a rocha
+            }
         }
 
-        pAux = ListaS->pPrimeiro->pProx;
-        for (int i = 0; i < sondaEscolhida; i++)
-        {
-            pAux = pAux->pProx;
+        // Se não conseguiu inserir em nenhuma sonda, descarta a rocha
+        if (sondaEscolhida == -1) {
+            printf("A rocha %d foi descartada (sem capacidade nas sondas).\n", rochas[i].id);
         }
 
-        ApontadorRocha novoNo = (ApontadorRocha)malloc(sizeof(RCelula));
-        if (novoNo == NULL)
-        {
-            free(peso_das_sondas);
-            return;
-        }
-        novoNo->rocha = pAuxRocha->rocha;
-        novoNo->pProx = NULL;
-
-        if (LEhVazia(&pAux->sonda.cRocha))
-        {
-            pAux->sonda.cRocha.pPrimeiro = novoNo;
-            pAux->sonda.cRocha.pUltimo = novoNo;
-        }
-        else
-        {
-            pAux->sonda.cRocha.pUltimo->pProx = novoNo;
-            pAux->sonda.cRocha.pUltimo = novoNo;
-        }
-        peso_das_sondas[sondaEscolhida] += pAuxRocha->rocha.peso;
-
-        ApontadorRocha temp = pAuxRocha;
-        pAuxRocha = pAuxRocha->pProx;
-        free(temp);
     }
 
-    NovaLista->pPrimeiro = NULL;
-    NovaLista->pUltimo = NULL;
+    // Imprime o peso de cada sonda após a distribuição (para verificar)
+    pAux = ListaS->pPrimeiro->pProx;
+    while (pAux != NULL) {
+        printf("Peso da sonda %d: %.2f\n", pAux->sonda.id, LPeso(&pAux->sonda));
+        pAux = pAux->pProx;
+    }
 
-    free(peso_das_sondas);
-    
-    printf("FIM REDISTRIBUIR");
+    free(pesosSondas);
 }
 
-void RemoveRocha(RCompartimento *Lista, ApontadorRocha pRemover)
-{
-    if (Lista->pPrimeiro == pRemover)
-    {
+void OperacaoE(SLista *ListaS) {
+    int numRochas = 0;
+    RochaMineral *rochas = extraiRochas(ListaS, &numRochas);
 
-        Lista->pPrimeiro = pRemover->pProx;
-        if (Lista->pPrimeiro == NULL)
-        {
-            Lista->pUltimo = NULL;
-        }
+    if (rochas != NULL) {
+        distribuirRochas(ListaS, rochas, numRochas);
+        free(rochas); // Libera a memória alocada para as rochas
+    } else {
+        printf("Nenhuma rocha para redistribuir.\n");
     }
-    else
-    {
 
-        ApontadorRocha pAnterior = Lista->pPrimeiro;
-        while (pAnterior->pProx != pRemover)
-        {
-            pAnterior = pAnterior->pProx;
-        }
-        pAnterior->pProx = pRemover->pProx;
-        if (pRemover == Lista->pUltimo)
-        {
-            Lista->pUltimo = pAnterior;
-        }
-    }
-    free(pRemover);
+    // Move todas as sondas para a origem (0,0)
+    MoveOrigem(ListaS);
 }

@@ -28,8 +28,11 @@ void MoveSonda(Sonda *sonda, double latitude, double longitude)
 float LPeso(Sonda *sonda)
 {
     float pesoTotal = 0;
+    if (sonda == NULL || sonda->cRocha.pPrimeiro->pProx == NULL) {
+        return 0;
+    }
+    
     ApontadorRocha pAux = sonda->cRocha.pPrimeiro->pProx;
-
     while (pAux != NULL)
     {
         pesoTotal += pAux->rocha.peso;
