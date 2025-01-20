@@ -11,7 +11,7 @@ typedef struct
     ListaMinerais LMinerais;
 } RochaMineral;
 
-RochaMineral InicializaRocha(RochaMineral *rocha, int id, float peso, char *categoria, char *dataColeta, double latitude, double longitude);
+void InicializaRocha(RochaMineral *rocha, int id, float peso, char *categoria, char *dataColeta, double latitude, double longitude);
 char *DefCategoria(RochaMineral *rocha);
 
 int getIdentificador(RochaMineral *rocha);

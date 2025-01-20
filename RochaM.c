@@ -3,15 +3,12 @@
 #include <string.h>
 #include "RochaM.h"
 
-RochaMineral InicializaRocha(RochaMineral *rocha, int id, float peso, char *categoria, char *dataColeta, double latitude, double longitude)
-{
+void InicializaRocha(RochaMineral *rocha, int id, float peso, char *categoria, char *dataColeta, double latitude, double longitude) {
     setIdentificador(rocha, id);
     setPeso(rocha, peso);
     setCategoria(rocha, categoria);
     setDataColeta(rocha, dataColeta);
     setLocalizacao(rocha, latitude, longitude);
-
-    return *rocha;
 }
 
 char *DefCategoria(RochaMineral *rocha)
