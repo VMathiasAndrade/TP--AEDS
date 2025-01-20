@@ -1,5 +1,5 @@
 #ifndef COMPARTIMENTO_H
-#define COMPARTIMENTO_H
+#define COMPARTIMENTO_H//.
 #include "RochaM.h"
 
 typedef struct CelulaRocha *ApontadorRocha;
@@ -22,4 +22,6 @@ void LImprime(RCompartimento *rLista);
 void LTrocaR(RCompartimento *rLista);
 int LInsere(RCompartimento *rLista, RochaMineral *pRocha);
 int LRetira(RCompartimento *rLista, RochaMineral *pRocha);
+void SelectionSort(RCompartimento *rLista);
+void QuickSort(RCompartimento *rLista);
 #endif

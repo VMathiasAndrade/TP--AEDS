@@ -9,7 +9,7 @@ void InicializaMineral(Mineral *mineral, char *nome, char *cor, double dureza, d
     setCor(mineral, cor);
     setDureza(mineral, reativ);
     setReatividade(mineral, dureza);
-}
+}//.
 void RetornaMineral(Mineral *mineral, char *nome)
 {
     if (strcmp(nome, "Ferrolita") == 0)

@@ -4,7 +4,7 @@
 #include "Mineral.h"
 
 typedef int Apontador;
-
+//.
 typedef struct
 {
     Mineral ListaM[MaxTam];

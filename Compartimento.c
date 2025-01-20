@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string.h>//.
 #include "Compartimento.h"
 
 void FLVazia(RCompartimento *rLista)
@@ -169,4 +169,53 @@ void LTrocaR(RCompartimento *rLista)
         }
         free(maisLeve);
     }
+}
+void Selectionsort(RCompartimento *rLista)
+{
+    int tamanho, comparacoes, movi;
+    float time;
+    tamanho = LTamanho(rLista);
+    ApontadorRocha i, j, min;
+    RCompartimento aux;
+    for(i=rLista->pPrimeiro->pProx; i!=NULL;i=i->pProx){
+        min = i;
+        for(j=i->pProx; j!=NULL; j=j->pProx){
+            if(j->rocha.peso<min->rocha.peso){
+                    min = j;
+            }
+        }
+        if(min!=i){
+            RochaMineral temp = i->rocha;
+            i->rocha= min->rocha;
+            min->rocha = temp;
+        }
+    }
+    printf("Comparações: %d\n", comparacoes);
+    printf("Movimentações: %d\n",movi);    
+    printf("Tempo de execução: %f\n", time);
+    printf("Algoritmo: SelectionSort \n");
+}
+void QuickSort(RCompartimento *rLista){
+    int tamanho, comparacoes, movi;
+    float time;
+    tamanho = LTamanho(rLista);
+    ApontadorRocha i, j, min;
+    RCompartimento aux;
+    for(i=rLista->pPrimeiro->pProx; i!=NULL;i=i->pProx){
+        min = i;
+        for(j=i->pProx; j!=NULL; j=j->pProx){
+            if(j->rocha.peso<min->rocha.peso){
+                    min = j;
+            }
+        }
+        if(min!=i){
+            RochaMineral temp = i->rocha;
+            i->rocha= min->rocha;
+            min->rocha = temp;
+        }
+    }
+    printf("Comparações: %d\n", comparacoes);
+    printf("Movimentações: %d\n",movi);    
+    printf("Tempo de execução: %f\n", time);
+    printf("Algoritmo: QuickSort \n");
 }

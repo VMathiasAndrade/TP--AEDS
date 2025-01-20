@@ -26,5 +26,5 @@ void setPeso(RochaMineral *rocha, float peso);
 void setCategoria(RochaMineral *rocha, char *categoria);
 void setDataColeta(RochaMineral *rocha, char *dataColeta);
 void setLocalizacao(RochaMineral *rocha, double latitude, double longitude);
-
+//.
 #endif

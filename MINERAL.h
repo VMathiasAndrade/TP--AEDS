@@ -12,7 +12,7 @@ void InicializaMineral(Mineral *mineral, char *nome, char *cor, double dureza, d
 void RetornaMineral(Mineral *mineral, char *nome);
 
 char *getNome(Mineral *mineral);
-char *getCor(Mineral *mineral);
+char *getCor(Mineral *mineral);//.
 double getDureza(Mineral *mineral);
 double getReatividade(Mineral *mineral);
 

@@ -130,4 +130,4 @@ float getPeso(RochaMineral *rocha) { return rocha->peso; }
 char *getCategoria(RochaMineral *rocha) { return rocha->categoria; }
 char *getDataColeta(RochaMineral *rocha) { return rocha->dataColeta; }
 double getLatitude(RochaMineral *rocha) { return rocha->latitude; }
-double getLongitude(RochaMineral *rocha) { return rocha->longitude; }
+double getLongitude(RochaMineral *rocha) { return rocha->longitude; }//.
